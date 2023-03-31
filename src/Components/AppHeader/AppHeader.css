@@ -1,0 +1,7 @@
+.flex-container {
+  display: flex;
+}
+
+.center {
+  vertical-align: middle;
+}
