@@ -5,3 +5,22 @@
 .center {
   vertical-align: middle;
 }
+
+.dotted {
+  border-style: dotted;
+}
+
+.logo {
+  margin: auto;
+}
+
+.header-left {
+  margin-left: 320px;
+}
+.header-right {
+  margin-right: 320px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}

@@ -1,0 +1,32 @@
+.main-constr {
+  width: 600px;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.flex-bb {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 0px;
+}
+
+.ingrs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bot-ingr {
+  position: absolute;
+  bottom: 140px;
+}
+
+.scrollCm {
+  overflow-y: scroll;
+  max-height: 50vh;
+}
