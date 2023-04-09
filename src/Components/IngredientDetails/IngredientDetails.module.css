@@ -1,19 +1,15 @@
+.imageIngr {
+  height: 240px;
+  width: 480px;
+  min-height: 100%;
+}
 .middle {
   text-align: center;
   white-space: normal;
 }
-.orderId {
-  height: 120px;
-  width: 520px;
-  text-shadow: rgb(0, 98, 255) 8px 0 10px;
-}
-.orderIdText {
-  height: 30px;
-  width: 520px;
-}
-.checkIcon {
-  height: 120px;
-  width: 120px;
-  margin-left: 300px;
+.description {
   display: flex;
+  justify-content: space-between;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }

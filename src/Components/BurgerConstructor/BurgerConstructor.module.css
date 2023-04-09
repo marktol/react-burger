@@ -22,9 +22,17 @@
 
 .botIngr {
   bottom: 140px;
+  display: flex;
+  align-self: flex-end;
 }
 
 .scrollCm {
   overflow-y: scroll;
-  max-height: 50vh;
+  height: 50vh;
+}
+
+.iconWithIngr {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
 }

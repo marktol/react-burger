@@ -24,3 +24,7 @@
 .nowrap {
   white-space: nowrap;
 }
+.linkColor {
+  color: inherit;
+  text-decoration: none;
+}

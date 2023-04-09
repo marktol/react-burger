@@ -6,12 +6,17 @@ import {
 import { useState, useEffect } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 const BurgerIngredients = (props) => {
   const [current, setCurrent] = useState("Buns");
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState();
+
+  useEffect(() => {
+    const element = document.getElementById(current);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
+  }, [current]);
 
   const onCloseModal = () => {
     setShowModal(false);
@@ -31,7 +36,7 @@ const BurgerIngredients = (props) => {
           show={showModal}
           title="Ingredient details"
         >
-          <OrderDetails data={selectedIngredient} />
+          <IngredientDetails data={selectedIngredient} />
         </Modal>
       )}
       <section className={`pt-10 ${styles.mainBurger}`}>
@@ -60,7 +65,10 @@ const BurgerIngredients = (props) => {
           </div>
         </section>
         <section className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
-          <p className={`text text_type_main-medium ${styles.textLeft}`}>
+          <p
+            id="Buns"
+            className={`text text_type_main-medium ${styles.textLeft}`}
+          >
             Buns
           </p>
           <section className={styles.items}>
@@ -80,7 +88,10 @@ const BurgerIngredients = (props) => {
               ))}
           </section>
 
-          <p className={`text text_type_main-medium ${styles.textLeft}`}>
+          <p
+            id="Sauces"
+            className={`text text_type_main-medium ${styles.textLeft}`}
+          >
             Sauces
           </p>
           <section className={styles.items}>
@@ -100,7 +111,10 @@ const BurgerIngredients = (props) => {
               ))}
           </section>
 
-          <p className={`text text_type_main-medium ${styles.textLeft}`}>
+          <p
+            id="Toppings"
+            className={`text text_type_main-medium ${styles.textLeft}`}
+          >
             Toppings
           </p>
           <section className={styles.items}>

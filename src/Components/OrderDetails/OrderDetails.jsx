@@ -1,41 +1,31 @@
 import styles from "./OrderDetails.module.css";
+import checked from "../../Images/done.png";
 
-const OrderDetails = (props) => {
+const OrderDetails = () => {
   return (
-    <div>
-      <img
-        className={`${styles.imageIngr} pl-30 pr-30`}
-        src={props.data.image_large}
-        alt={props.data.name}
-      />
-
-      <p className={`text text_type_main-medium ${styles.middle}`}>
-        {props.data.name}
-      </p>
-
-      <div
-        className={`${styles.description} pl-25 pr-25 pb-15 ${styles.middle}`}
+    <>
+      <p
+        className={`text text_type_digits-large ${styles.middle} ${styles.orderId} ml-25 mr-25 mt-4`}
       >
-        <div className="text text_type_main-default text_color_inactive">
-          <p>Calories, Kcal</p>
-          <p className="text text_type_digits-default">{props.data.calories}</p>
-        </div>
-        <div className="text text_type_main-default text_color_inactive">
-          <p>Proteins, g</p>
-          <p className="text text_type_digits-default">{props.data.proteins}</p>
-        </div>
-        <div className="text text_type_main-default text_color_inactive">
-          <p>Fats, g</p>
-          <p className="text text_type_digits-default">{props.data.fat}</p>
-        </div>
-        <div className="text text_type_main-default text_color_inactive">
-          <p>Carbohydrates, g</p>
-          <p className="text text_type_digits-default">
-            {props.data.carbohydrates}
-          </p>
-        </div>
+        034536
+      </p>
+      <p
+        className={`text text_type_main-default ${styles.middle} ${styles.orderIdText} ml-25 mr-25 mt-8`}
+      >
+        order id
+      </p>
+      <div className={`${styles.middle} ${styles.checkIcon} mt-15`}>
+        <img src={checked} alt="Checked" />
       </div>
-    </div>
+      <p className={`text text_type_main-small ${styles.middle} mt-15`}>
+        Your order is being prepared
+      </p>
+      <p
+        className={`text text_type_main-small text_color_inactive ${styles.middle} mt-2  mb-30`}
+      >
+        Wait for readiness at the orbital station
+      </p>
+    </>
   );
 };
 
