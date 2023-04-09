@@ -1,9 +1,9 @@
-.main-burger {
+.mainBurger {
   margin-left: 380px;
   width: 600px;
 }
 
-.text-left {
+.textLeft {
   text-align: left;
 }
 
@@ -16,7 +16,7 @@
   flex-wrap: wrap;
 }
 
-.just-flex {
+.justFlex {
   display: flex;
 }
 .name {
@@ -25,7 +25,7 @@
   text-align: center;
   white-space: normal;
 }
-.flex-cost {
+.flexCost {
   padding: 0;
   margin: 0;
   list-style: none;

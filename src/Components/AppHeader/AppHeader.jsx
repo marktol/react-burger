@@ -4,12 +4,14 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./AppHeader.css";
+import styles from "./AppHeader.module.css";
 
 const AppHeader = () => {
   return (
-    <section className="flex-container  ml-10 mr-10 mb-10 mt-10 ">
-      <section className="mb-4 mt-4 mr-2 header-left flex-container ">
+    <section className={`ml-10 mr-10 mb-10 mt-10 ${styles.flexContainer} `}>
+      <section
+        className={`mb-4 mt-4 mr-2 ${styles.headerLeft} ${styles.flexContainer}`}
+      >
         <section className="ml-5 mr-1 mb-4 mt-4">
           <BurgerIcon type="primary" />
         </section>
@@ -18,20 +20,24 @@ const AppHeader = () => {
         </section>
       </section>
 
-      <section className="mb-4 mt-4 flex-container ">
+      <section className={`mb-4 mt-4 ${styles.flexContainer}`}>
         <section className="ml-5 mr-1 mb-4 mt-4">
           <ListIcon type="primary" />
         </section>
-        <section className="mb-4 mt-4 ml-1 mr-5 text text_type_main-default  nowrap ">
+        <section
+          className={`mb-4 mt-4 ml-1 mr-5 text text_type_main-default ${styles.nowrap}`}
+        >
           <span>Order list</span>
         </section>
       </section>
 
-      <section className="  logo mt-6 mb-6">
+      <section className={` ${styles.logo} mt-6 mb-6`}>
         <Logo />
       </section>
 
-      <section className="mb-4 mt-4 header-right flex-container ">
+      <section
+        className={`mb-4 mt-4 ${styles.headerRight} ${styles.flexContainer} `}
+      >
         <section className="ml-5 mr-1 mb-4 mt-4">
           <ProfileIcon type="primary" />
         </section>

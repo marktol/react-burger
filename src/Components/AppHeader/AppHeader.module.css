@@ -1,4 +1,4 @@
-.flex-container {
+.flexContainer {
   display: flex;
 }
 
@@ -14,10 +14,10 @@
   margin: auto;
 }
 
-.header-left {
+.headerLeft {
   margin-left: 320px;
 }
-.header-right {
+.headerRight {
   margin-right: 320px;
 }
 

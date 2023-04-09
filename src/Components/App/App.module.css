@@ -1,7 +1,7 @@
-.Menu {
+.menu {
   display: flex;
 }
-.main-container {
+.main {
   max-height: 100vh;
   height: 100vh;
   overflow: hidden;

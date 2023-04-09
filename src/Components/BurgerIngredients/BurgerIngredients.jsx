@@ -1,18 +1,20 @@
 import {
   Tab,
   CurrencyIcon,
-  ListIcon,
-  ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import { useState } from "react";
-import "./BurgerIngredients.css";
+import styles from "./BurgerIngredients.module.css";
+import { Modal } from "../Modal/Modal";
 
 const BurgerIngredients = (props) => {
   const [current, setCurrent] = useState("Buns");
 
   return (
-    <section className="main-burger pt-10">
-      <p className="text text_type_main-large text-left">Make a burger</p>
+    <section className={`pt-10 ${styles.mainBurger}`}>
+      <p className={`text text_type_main-large ${styles.textLeft}`}>
+        Make a burger
+      </p>
       <section className="tab mb-10">
         <div style={{ display: "flex" }}>
           <Tab value="Buns" active={current === "Buns"} onClick={setCurrent}>
@@ -34,9 +36,9 @@ const BurgerIngredients = (props) => {
           </Tab>
         </div>
       </section>
-      <section className="scrollDiv custom-scroll mb-1 pb-1">
-        <p className="text text_type_main-medium text-left">Buns</p>
-        <section className="items ">
+      <section className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
+        <p className={`text text_type_main-medium ${styles.textLeft}`}>Buns</p>
+        <section className={styles.items}>
           {props.data
             .filter((elem) => elem.type === "bun")
             .map((bun) => (
@@ -45,12 +47,15 @@ const BurgerIngredients = (props) => {
                 img={bun.image}
                 cost={bun.price}
                 name={bun.name}
+                data={bun}
               />
             ))}
         </section>
 
-        <p className="text text_type_main-medium  text-left">Sauces</p>
-        <section className="items ">
+        <p className={`text text_type_main-medium ${styles.textLeft}`}>
+          Sauces
+        </p>
+        <section className={styles.items}>
           {props.data
             .filter((elem) => elem.type === "sauce")
             .map((sauce) => (
@@ -59,12 +64,15 @@ const BurgerIngredients = (props) => {
                 img={sauce.image}
                 cost={sauce.price}
                 name={sauce.name}
+                data={sauce}
               />
             ))}
         </section>
 
-        <p className="text text_type_main-medium  text-left">Toppings</p>
-        <section className="items ">
+        <p className={`text text_type_main-medium ${styles.textLeft}`}>
+          Toppings
+        </p>
+        <section className={styles.items}>
           {props.data
             .filter((elem) => elem.type === "main")
             .map((main) => (
@@ -73,6 +81,7 @@ const BurgerIngredients = (props) => {
                 img={main.image}
                 cost={main.price}
                 name={main.name}
+                data={main}
               />
             ))}
         </section>
@@ -82,13 +91,29 @@ const BurgerIngredients = (props) => {
 };
 
 const BurgerElement = (props) => {
-  return (
-    <section className=" mr-4">
-      <img className="ml-4 mr-4 " src={props.img} alt="image" />
+  const [isVisible, setisVisible] = useState(false);
 
-      <section className="flex-cost">
+  const handleOpenModal = () => {
+    console.log("click");
+    setisVisible(true);
+  };
+  const toggleModal = () => {
+    console.log("X clicked");
+    setisVisible(false);
+  };
+
+  const openModal = (
+    <Modal data={props.data} toggleModal={toggleModal} show={isVisible} />
+  );
+
+  return (
+    <section className="mr-4" onClick={handleOpenModal}>
+      {isVisible && openModal}
+      <img className="ml-4 mr-4" src={props.img} alt="image" />
+
+      <section className={styles.flexCost}>
         <section>
-          <span className="cost mt-1 mb-1 text text_type_digits-default ">
+          <span className="text text_type_digits-default mt-1 mb-1">
             {props.cost}
           </span>
         </section>
@@ -97,7 +122,9 @@ const BurgerElement = (props) => {
         </section>
       </section>
 
-      <p className="name text text_type_main-small mr-1 ml-1">{props.name}</p>
+      <p className={`${styles.name} text text_type_main-small mr-1 ml-1`}>
+        {props.name}
+      </p>
     </section>
   );
 };
