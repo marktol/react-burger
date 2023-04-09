@@ -25,13 +25,14 @@ function App() {
   }, []);
 
   return (
-    <section className={styles.main} id="react-modals">
+    <div className={styles.main} id="react-modals">
       <AppHeader />
-      <section className={styles.menu}>
+      <div className={styles.menu}>
         {!isLoading && <BurgerIngredients data={state} />}
+        {!isLoading && hasError && <h1>Uploading error, refresh page</h1>}
         <BurgerConstructor />
-      </section>
-    </section>
+      </div>
+    </div>
   );
 }
 

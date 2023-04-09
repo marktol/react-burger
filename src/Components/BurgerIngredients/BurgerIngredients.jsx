@@ -39,11 +39,11 @@ const BurgerIngredients = (props) => {
           <IngredientDetails data={selectedIngredient} />
         </Modal>
       )}
-      <section className={`pt-10 ${styles.mainBurger}`}>
+      <div className={`pt-10 ${styles.mainBurger}`}>
         <p className={`text text_type_main-large ${styles.textLeft}`}>
           Make a burger
         </p>
-        <section className="tab mb-10">
+        <div className="tab mb-10">
           <div style={{ display: "flex" }}>
             <Tab value="Buns" active={current === "Buns"} onClick={setCurrent}>
               Buns
@@ -63,15 +63,15 @@ const BurgerIngredients = (props) => {
               Toppings
             </Tab>
           </div>
-        </section>
-        <section className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
+        </div>
+        <div className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
           <p
             id="Buns"
             className={`text text_type_main-medium ${styles.textLeft}`}
           >
             Buns
           </p>
-          <section className={styles.items}>
+          <div className={styles.items}>
             {props.data
               .filter((elem) => elem.type === "bun")
               .map((bun) => (
@@ -86,7 +86,7 @@ const BurgerIngredients = (props) => {
                   }}
                 />
               ))}
-          </section>
+          </div>
 
           <p
             id="Sauces"
@@ -94,7 +94,7 @@ const BurgerIngredients = (props) => {
           >
             Sauces
           </p>
-          <section className={styles.items}>
+          <div className={styles.items}>
             {props.data
               .filter((elem) => elem.type === "sauce")
               .map((sauce) => (
@@ -109,7 +109,7 @@ const BurgerIngredients = (props) => {
                   }}
                 />
               ))}
-          </section>
+          </div>
 
           <p
             id="Toppings"
@@ -117,7 +117,7 @@ const BurgerIngredients = (props) => {
           >
             Toppings
           </p>
-          <section className={styles.items}>
+          <div className={styles.items}>
             {props.data
               .filter((elem) => elem.type === "main")
               .map((main) => (
@@ -132,33 +132,33 @@ const BurgerIngredients = (props) => {
                   }}
                 />
               ))}
-          </section>
-        </section>
-      </section>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 
 const BurgerElement = (props) => {
   return (
-    <section className="mr-4" onClick={props.onClick}>
+    <div className="mr-4" onClick={props.onClick}>
       <img className="ml-4 mr-4" src={props.img} alt="image" />
 
-      <section className={styles.flexCost}>
-        <section>
+      <div className={styles.flexCost}>
+        <div>
           <span className="text text_type_digits-default mt-1 mb-1">
             {props.cost}
           </span>
-        </section>
-        <section>
+        </div>
+        <div>
           <CurrencyIcon type="primary" />
-        </section>
-      </section>
+        </div>
+      </div>
 
       <p className={`${styles.name} text text_type_main-small mr-1 ml-1`}>
         {props.name}
       </p>
-    </section>
+    </div>
   );
 };
 

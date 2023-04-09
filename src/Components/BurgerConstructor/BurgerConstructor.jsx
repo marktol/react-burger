@@ -28,9 +28,9 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
-      <section className={`${styles.parent} ${styles.mainConstr}  pt-25 pl-10`}>
-        <section className={`${styles.ingrs}  pl-4`}>
-          <section className={`${styles.botIngr} mr-5`}>
+      <div className={`${styles.parent} ${styles.mainConstr}  pt-25 pl-10`}>
+        <div className={`${styles.ingrs}  pl-4`}>
+          <div className={`${styles.botIngr} mr-5`}>
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -40,7 +40,7 @@ const BurgerConstructor = () => {
                 "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
               }
             />
-          </section>
+          </div>
 
           <div className={`${styles.scrollCm} ${styles.ingrs} custom-scroll `}>
             <div className={styles.iconWithIngr}>
@@ -210,7 +210,7 @@ const BurgerConstructor = () => {
             </div>
           </div>
 
-          <section className={`${styles.botIngr} mr-5`}>
+          <div className={`${styles.botIngr} mr-5`}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -220,19 +220,19 @@ const BurgerConstructor = () => {
                 "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
               }
             />
-          </section>
-        </section>
+          </div>
+        </div>
 
-        <section className={`${styles.flexBb} mt-10 pr-4`}>
-          <section>
+        <div className={`${styles.flexBb} mt-10 pr-4`}>
+          <div>
             <span className="cost mt-1 mb-1 mr-4 text text text_type_digits-medium ">
               1223
             </span>
-          </section>
-          <section className="mr-10">
+          </div>
+          <div className="mr-10">
             <CurrencyIcon type="primary" />
-          </section>
-          <section>
+          </div>
+          <div>
             <Button
               htmlType="button"
               type="primary"
@@ -241,9 +241,9 @@ const BurgerConstructor = () => {
             >
               Make an order
             </Button>
-          </section>
-        </section>
-      </section>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
