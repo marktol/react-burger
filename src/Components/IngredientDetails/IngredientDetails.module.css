@@ -1,0 +1,15 @@
+.imageIngr {
+  height: 240px;
+  width: 480px;
+  min-height: 100%;
+}
+.middle {
+  text-align: center;
+  white-space: normal;
+}
+.description {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}

@@ -1,0 +1,30 @@
+.flexContainer {
+  display: flex;
+}
+
+.center {
+  vertical-align: middle;
+}
+
+.dotted {
+  border-style: dotted;
+}
+
+.logo {
+  margin: auto;
+}
+
+.headerLeft {
+  margin-left: 320px;
+}
+.headerRight {
+  margin-right: 320px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+.linkColor {
+  color: inherit;
+  text-decoration: none;
+}

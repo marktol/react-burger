@@ -1,0 +1,40 @@
+.mainBurger {
+  margin-left: 380px;
+  width: 600px;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.border {
+  border-style: dotted;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.justFlex {
+  display: flex;
+}
+.name {
+  height: 48px;
+  width: 250px;
+  text-align: center;
+  white-space: normal;
+}
+.flexCost {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollDiv {
+  overflow-y: scroll;
+  height: 70vh;
+}
