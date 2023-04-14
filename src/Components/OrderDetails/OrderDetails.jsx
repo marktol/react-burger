@@ -1,13 +1,14 @@
 import styles from "./OrderDetails.module.css";
 import checked from "../../Images/done.png";
+import { PropTypes } from "prop-types";
 
-const OrderDetails = () => {
+const OrderDetails = (props) => {
   return (
     <>
       <p
         className={`text text_type_digits-large ${styles.middle} ${styles.orderId} ml-25 mr-25 mt-4`}
       >
-        034536
+        {props.orderNumber}
       </p>
       <p
         className={`text text_type_main-default ${styles.middle} ${styles.orderIdText} ml-25 mr-25 mt-8`}
@@ -30,3 +31,7 @@ const OrderDetails = () => {
 };
 
 export default OrderDetails;
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number,
+};
