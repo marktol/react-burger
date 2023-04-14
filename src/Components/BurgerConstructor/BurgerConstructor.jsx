@@ -5,12 +5,25 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../Modal/Modal";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import { BurgerContext, SelectedIngrsContext } from "../../utils/burgerContext";
 
 import styles from "./BurgerConstructor.module.css";
 
 const BurgerConstructor = () => {
+  const { burgerIngrs, setBurgerIngrs } = useContext(BurgerContext);
+  const { selectedIngrs, setSelectedIngrs } = useContext(SelectedIngrsContext);
+
+  useEffect(() => {
+    if (burgerIngrs) {
+      setSelectedIngrs({
+        topings: burgerIngrs.filter((elem) => elem.type != "bun"),
+        bun: burgerIngrs.find((elem) => elem.type == "bun"),
+      });
+    }
+  }, [burgerIngrs]);
+
   const [showModal, setShowModal] = useState(false);
 
   const onCloseModal = () => {
@@ -43,171 +56,25 @@ const BurgerConstructor = () => {
           </div>
 
           <div className={`${styles.scrollCm} ${styles.ingrs} custom-scroll `}>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
-            <div className={styles.iconWithIngr}>
-              <div>
-                <DragIcon type="primary" />
-              </div>
-              <div>
-                <ConstructorElement
-                  text="Краторная булка N-200i (верх)"
-                  isLocked={false}
-                  price={50}
-                  thumbnail={
-                    "https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-                  }
-                />
-              </div>
-            </div>
+            {selectedIngrs &&
+              selectedIngrs.topings
+                .filter((elem) => elem.type != "bun1")
+                .map((ingr) => (
+                  <div className={styles.iconWithIngr} key={ingr._id}>
+                    <div>
+                      <DragIcon type="primary" />
+                    </div>
+                    <div>
+                      <ConstructorElement
+                        key={ingr._id}
+                        text={ingr.name}
+                        isLocked={false}
+                        price={ingr.price}
+                        thumbnail={ingr.image}
+                      />
+                    </div>
+                  </div>
+                ))}
           </div>
 
           <div className={`${styles.botIngr} mr-5`}>
