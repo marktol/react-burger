@@ -5,12 +5,15 @@ import {
 import { PropTypes } from "prop-types";
 import { ingrType } from "../../utils/prop-types";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { BurgerContext } from "../../utils/burgerContext";
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = () => {
+  const { burgerIngrs, setBurgerIngrs } = useContext(BurgerContext);
+
   const [current, setCurrent] = useState("Buns");
   const [showModal, setShowModal] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState();
@@ -74,7 +77,7 @@ const BurgerIngredients = (props) => {
             Buns
           </p>
           <div className={styles.items}>
-            {props.data
+            {burgerIngrs
               .filter((elem) => elem.type === "bun")
               .map((bun) => (
                 <BurgerElement
@@ -97,7 +100,7 @@ const BurgerIngredients = (props) => {
             Sauces
           </p>
           <div className={styles.items}>
-            {props.data
+            {burgerIngrs
               .filter((elem) => elem.type === "sauce")
               .map((sauce) => (
                 <BurgerElement
@@ -120,7 +123,7 @@ const BurgerIngredients = (props) => {
             Toppings
           </p>
           <div className={styles.items}>
-            {props.data
+            {burgerIngrs
               .filter((elem) => elem.type === "main")
               .map((main) => (
                 <BurgerElement
