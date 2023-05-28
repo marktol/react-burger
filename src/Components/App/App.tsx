@@ -5,18 +5,21 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import { useEffect, useState } from "react";
 import { getIngredients } from "../../utils/burger-api";
 
-const url = "https://norma.nomoreparties.space/api/ingredients";
+import { useDispatch } from "react-redux";
+import { addIngridients } from "../../services/reducers/allIngridientsReducer";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [state, setState] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getIngredients()
       .then((data) => {
         setIsLoading(false);
-        setState(data.data);
+        dispatch(addIngridients(data.data));
       })
       .catch(() => {
         setHasError(true);
@@ -27,11 +30,13 @@ function App() {
   return (
     <div className={styles.main} id="react-modals">
       <AppHeader />
-      <div className={styles.menu}>
-        {!isLoading && <BurgerIngredients data={state} />}
-        {!isLoading && hasError && <h1>Uploading error, refresh page</h1>}
-        <BurgerConstructor />
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className={styles.menu}>
+          {!isLoading && <BurgerIngredients />}
+          {!isLoading && hasError && <h1>Uploading error, refresh page</h1>}
+          <BurgerConstructor />
+        </div>
+      </DndProvider>
     </div>
   );
 }
