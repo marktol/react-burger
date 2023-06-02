@@ -3,39 +3,41 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import { useEffect, useState } from "react";
-import { getIngredients } from "../../utils/burger-api";
+import { getIngredients } from "../../services/actions/thunkFunctions";
 
 import { useDispatch } from "react-redux";
-import { addIngridients } from "../../services/reducers/allIngridientsReducer";
+
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    getIngredients()
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        dispatch(getIngredients());
         setIsLoading(false);
-        dispatch(addIngridients(data.data));
-      })
-      .catch(() => {
+      } catch (error) {
         setHasError(true);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div className={styles.main} id="react-modals">
       <AppHeader />
       <DndProvider backend={HTML5Backend}>
-        <div className={styles.menu}>
+        <main className={styles.menu}>
           {!isLoading && <BurgerIngredients />}
           {!isLoading && hasError && <h1>Uploading error, refresh page</h1>}
           <BurgerConstructor />
-        </div>
+        </main>
       </DndProvider>
     </div>
   );

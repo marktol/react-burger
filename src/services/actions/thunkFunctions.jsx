@@ -1,0 +1,33 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
+const NORMA_API = "https://norma.nomoreparties.space/api";
+
+const checkReponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
+
+export const getIngredients = createAsyncThunk("data/fetchData", async () => {
+  const response = await fetch(`${NORMA_API}/ingredients`).then(checkReponse);
+
+  const data = response.data;
+  return data;
+});
+
+export const setOrder = createAsyncThunk(
+  "data/setOrder",
+  async (ingredientsId) => {
+    console.log(ingredientsId);
+    const response = await fetch(`${NORMA_API}/orders`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        ingredients: ingredientsId,
+      }),
+    }).then(checkReponse);
+
+    const data = response.order.number;
+    return data;
+  }
+);

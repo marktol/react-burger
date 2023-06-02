@@ -1,11 +1,12 @@
 import styles from "./OrderDetails.module.css";
 import checked from "../../Images/done.png";
-import { setOrder } from "../../utils/burger-api";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
   const orderNumber = useSelector((state) => state.orderDetails.orderNumber);
+  console.log("number:");
+  console.log(orderNumber);
 
   return (
     <>

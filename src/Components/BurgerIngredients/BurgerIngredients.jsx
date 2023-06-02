@@ -1,6 +1,7 @@
 import {
   Tab,
   CurrencyIcon,
+  Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PropTypes } from "prop-types";
 import { ingrType } from "../../utils/prop-types";
@@ -53,7 +54,7 @@ const BurgerIngredients = () => {
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [ingridients]);
 
   const onCloseModal = () => {
     setShowModal(false);
@@ -122,6 +123,7 @@ const BurgerIngredients = () => {
                   cost={bun.price}
                   name={bun.name}
                   data={bun}
+                  count={bun.count}
                   onClick={() => {
                     onOpenModal(bun);
                   }}
@@ -147,6 +149,7 @@ const BurgerIngredients = () => {
                   cost={ingr.price}
                   name={ingr.name}
                   data={ingr}
+                  count={ingr.count}
                   onClick={() => {
                     onOpenModal(ingr);
                   }}
@@ -172,6 +175,7 @@ const BurgerIngredients = () => {
                   cost={ingr.price}
                   name={ingr.name}
                   data={ingr}
+                  count={ingr.count}
                   onClick={() => {
                     onOpenModal(ingr);
                   }}
@@ -194,7 +198,12 @@ const BurgerElement = (props) => {
 
   return (
     <div className="mr-4" onClick={props.onClick} ref={drag}>
-      <img className="ml-4 mr-4" src={props.img} alt="image" />
+      <div>
+        <div className={styles.counterTop}>
+          {props.count > 0 && <Counter count={props.count} size="small" />}
+        </div>
+      </div>
+      <img className="ml-4 mr-4" src={props.img} alt={props.name} />
 
       <div className={styles.flexCost}>
         <div>

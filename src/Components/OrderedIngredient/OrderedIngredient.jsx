@@ -7,6 +7,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteFromBurgerConstructor } from "../../services/reducers/BurgerConstructorReducer";
+import { removeIngridient } from "../../services/reducers/allIngridientsReducer";
 
 const OrderedIngredient = ({ elem, index, moveIngredient }) => {
   const ref = useRef(null);
@@ -66,6 +67,11 @@ const OrderedIngredient = ({ elem, index, moveIngredient }) => {
           dispatch(
             deleteFromBurgerConstructor({
               id: elem.id,
+            })
+          );
+          dispatch(
+            removeIngridient({
+              id: elem.item._id,
             })
           );
         }}

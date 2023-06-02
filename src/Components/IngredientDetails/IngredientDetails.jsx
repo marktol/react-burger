@@ -1,6 +1,4 @@
 import styles from "./IngredientDetails.module.css";
-import { PropTypes } from "prop-types";
-import { ingrType } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
@@ -45,7 +43,3 @@ const IngredientDetails = () => {
 };
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  ingrType,
-};

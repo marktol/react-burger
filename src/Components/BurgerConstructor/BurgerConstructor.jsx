@@ -13,12 +13,17 @@ import {
   updateListBurgerConstructor,
   addBunToBurgerConstructor,
 } from "../../services/reducers/BurgerConstructorReducer";
+import {
+  addIngridient,
+  removeIngridient,
+} from "../../services/reducers/allIngridientsReducer";
 import { v4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import OrderedIngredient from "../OrderedIngredient/OrderedIngredient";
-import { setOrder } from "../../utils/burger-api";
+import { setOrder } from "../../services/actions/thunkFunctions";
 import { setOrderNumber } from "../../services/reducers/OrderDetailsReducer";
+import { addBun } from "../../services/reducers/allIngridientsReducer";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -62,6 +67,12 @@ const BurgerConstructor = () => {
           id: v4(),
         })
       );
+
+      dispatch(
+        addIngridient({
+          id: item.element._id,
+        })
+      );
     },
   });
 
@@ -73,6 +84,11 @@ const BurgerConstructor = () => {
           item: item.element,
         })
       );
+      dispatch(
+        addBun({
+          id: item.element._id,
+        })
+      );
     },
   });
 
@@ -82,16 +98,18 @@ const BurgerConstructor = () => {
   };
 
   const onOpenModal = () => {
-    setOrder(itemsForOrder)
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        dispatch(setOrder(itemsForOrder));
         setIsLoading(false);
-        dispatch(setOrderNumber(data.order.number));
         setShowModal(true);
-      })
-      .catch(() => {
+      } catch (error) {
         setHasError(true);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   };
 
   return (
@@ -132,6 +150,7 @@ const BurgerConstructor = () => {
               {ingrsInConstructor.length > 0 ? (
                 ingrsInConstructor.map((elem, index) => (
                   <OrderedIngredient
+                    key={elem.id}
                     elem={elem}
                     moveIngredient={moveIngredient}
                     index={index}
