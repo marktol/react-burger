@@ -39,4 +39,9 @@
 }
 .counterTop {
   float: right;
+  position: relative;
+}
+.counter {
+  position: relative;
+  float: right;
 }

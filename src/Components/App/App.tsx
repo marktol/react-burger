@@ -17,13 +17,8 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        dispatch(getIngredients());
-        setIsLoading(false);
-      } catch (error) {
-        setHasError(true);
-        setIsLoading(false);
-      }
+      dispatch(getIngredients());
+      setIsLoading(false);
     };
 
     fetchData();

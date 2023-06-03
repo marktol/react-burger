@@ -200,7 +200,13 @@ const BurgerElement = (props) => {
     <div className="mr-4" onClick={props.onClick} ref={drag}>
       <div>
         <div className={styles.counterTop}>
-          {props.count > 0 && <Counter count={props.count} size="small" />}
+          {props.count > 0 && (
+            <Counter
+              className={styles.counterTop}
+              count={props.count}
+              size="small"
+            />
+          )}
         </div>
       </div>
       <img className="ml-4 mr-4" src={props.img} alt={props.name} />
