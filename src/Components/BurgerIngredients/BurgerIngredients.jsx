@@ -1,6 +1,7 @@
 import {
   Tab,
   CurrencyIcon,
+  Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PropTypes } from "prop-types";
 import { ingrType } from "../../utils/prop-types";
@@ -9,25 +10,60 @@ import { useState, useEffect } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { useSelector, useDispatch } from "react-redux";
+import { addIngridientDetails } from "../../services/reducers/IngredientDetailsReducer";
+import { useDrag } from "react-dnd";
 
-const BurgerIngredients = (props) => {
-  const [current, setCurrent] = useState("Buns");
+const BurgerIngredients = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState();
+  const [activeTab, setActiveTab] = useState("Buns");
+
+  const ingridients = useSelector((state) => state.allIngridients.ingridients);
+
+  const dispatch = useDispatch();
+
+  const handleScroll = () => {
+    const container = document.querySelector(`.${styles.scrollDiv}`);
+    const headers = container.querySelectorAll("p.text_type_main-medium");
+
+    let closestHeader = headers[0];
+    let closestHeaderDistance = Math.abs(
+      container.getBoundingClientRect().top -
+        closestHeader.getBoundingClientRect().top
+    );
+
+    headers.forEach((header) => {
+      const distance = Math.abs(
+        container.getBoundingClientRect().top -
+          header.getBoundingClientRect().top
+      );
+
+      if (distance < closestHeaderDistance) {
+        closestHeader = header;
+        closestHeaderDistance = distance;
+      }
+    });
+
+    setActiveTab(closestHeader.id);
+  };
 
   useEffect(() => {
-    const element = document.getElementById(current);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  }, [current]);
+    const container = document.querySelector(`.${styles.scrollDiv}`);
+    container.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, [ingridients]);
 
   const onCloseModal = () => {
     setShowModal(false);
-    setSelectedIngredient(null);
+    dispatch(addIngridientDetails({}));
   };
 
   const onOpenModal = (ingredient) => {
+    dispatch(addIngridientDetails(ingredient));
     setShowModal(true);
-    setSelectedIngredient(ingredient);
   };
 
   return (
@@ -36,33 +72,37 @@ const BurgerIngredients = (props) => {
         <Modal
           closeModal={onCloseModal}
           show={showModal}
-          title="Ingredient details"
+          title="Подробности ингредиента"
         >
-          <IngredientDetails data={selectedIngredient} />
+          <IngredientDetails />
         </Modal>
       )}
       <div className={`pt-10 ${styles.mainBurger}`}>
         <p className={`text text_type_main-large ${styles.textLeft}`}>
-          Make a burger
+          Создайте свой бургер
         </p>
         <div className="tab mb-10">
           <div style={{ display: "flex" }}>
-            <Tab value="Buns" active={current === "Buns"} onClick={setCurrent}>
-              Buns
+            <Tab
+              value="Buns"
+              active={activeTab === "Buns"}
+              onClick={() => setActiveTab("Buns")}
+            >
+              Булки
             </Tab>
             <Tab
               value="Sauces"
-              active={current === "Sauces"}
-              onClick={setCurrent}
+              active={activeTab === "Sauces"}
+              onClick={() => setActiveTab("Sauces")}
             >
-              Sauces
+              Соусы
             </Tab>
             <Tab
               value="Toppings"
-              active={current === "Toppings"}
-              onClick={setCurrent}
+              active={activeTab === "Toppings"}
+              onClick={() => setActiveTab("Toppings")}
             >
-              Toppings
+              Начинки
             </Tab>
           </div>
         </div>
@@ -71,10 +111,10 @@ const BurgerIngredients = (props) => {
             id="Buns"
             className={`text text_type_main-medium ${styles.textLeft}`}
           >
-            Buns
+            Булки
           </p>
           <div className={styles.items}>
-            {props.data
+            {ingridients
               .filter((elem) => elem.type === "bun")
               .map((bun) => (
                 <BurgerElement
@@ -83,9 +123,12 @@ const BurgerIngredients = (props) => {
                   cost={bun.price}
                   name={bun.name}
                   data={bun}
+                  count={bun.count}
                   onClick={() => {
                     onOpenModal(bun);
                   }}
+                  dragType="bun"
+                  itemId={bun._id}
                 />
               ))}
           </div>
@@ -94,21 +137,24 @@ const BurgerIngredients = (props) => {
             id="Sauces"
             className={`text text_type_main-medium ${styles.textLeft}`}
           >
-            Sauces
+            Соусы
           </p>
           <div className={styles.items}>
-            {props.data
+            {ingridients
               .filter((elem) => elem.type === "sauce")
-              .map((sauce) => (
+              .map((ingr) => (
                 <BurgerElement
-                  key={sauce._id}
-                  img={sauce.image}
-                  cost={sauce.price}
-                  name={sauce.name}
-                  data={sauce}
+                  key={ingr._id}
+                  img={ingr.image}
+                  cost={ingr.price}
+                  name={ingr.name}
+                  data={ingr}
+                  count={ingr.count}
                   onClick={() => {
-                    onOpenModal(sauce);
+                    onOpenModal(ingr);
                   }}
+                  dragType="ingr"
+                  itemId={ingr._id}
                 />
               ))}
           </div>
@@ -117,21 +163,24 @@ const BurgerIngredients = (props) => {
             id="Toppings"
             className={`text text_type_main-medium ${styles.textLeft}`}
           >
-            Toppings
+            Начинки
           </p>
           <div className={styles.items}>
-            {props.data
+            {ingridients
               .filter((elem) => elem.type === "main")
-              .map((main) => (
+              .map((ingr) => (
                 <BurgerElement
-                  key={main._id}
-                  img={main.image}
-                  cost={main.price}
-                  name={main.name}
-                  data={main}
+                  key={ingr._id}
+                  img={ingr.image}
+                  cost={ingr.price}
+                  name={ingr.name}
+                  data={ingr}
+                  count={ingr.count}
                   onClick={() => {
-                    onOpenModal(main);
+                    onOpenModal(ingr);
                   }}
+                  dragType="ingr"
+                  itemId={ingr._id}
                 />
               ))}
           </div>
@@ -142,9 +191,25 @@ const BurgerIngredients = (props) => {
 };
 
 const BurgerElement = (props) => {
+  const [, drag] = useDrag({
+    type: props.dragType,
+    item: { element: props.data },
+  });
+
   return (
-    <div className="mr-4" onClick={props.onClick}>
-      <img className="ml-4 mr-4" src={props.img} alt="image" />
+    <div className="mr-4" onClick={props.onClick} ref={drag}>
+      <div>
+        <div className={styles.counterTop}>
+          {props.count > 0 && (
+            <Counter
+              className={styles.counterTop}
+              count={props.count}
+              size="small"
+            />
+          )}
+        </div>
+      </div>
+      <img className="ml-4 mr-4" src={props.img} alt={props.name} />
 
       <div className={styles.flexCost}>
         <div>

@@ -1,5 +1,4 @@
 .mainBurger {
-  margin-left: 380px;
   width: 600px;
 }
 
@@ -37,4 +36,12 @@
 .scrollDiv {
   overflow-y: scroll;
   height: 70vh;
+}
+.counterTop {
+  float: right;
+  position: relative;
+}
+.counter {
+  position: relative;
+  float: right;
 }

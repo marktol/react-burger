@@ -8,7 +8,7 @@ import styles from "./AppHeader.module.css";
 
 const AppHeader = () => {
   return (
-    <div className={`ml-10 mr-10 mt-10 ${styles.flexContainer} `}>
+    <header className={`ml-10 mr-10 mt-10 ${styles.flexContainer} `}>
       <a
         href=""
         className={`mb-4 mt-4 mr-2 ${styles.headerLeft} ${styles.flexContainer} ${styles.linkColor}`}
@@ -50,7 +50,7 @@ const AppHeader = () => {
           <span className="text text_type_main-default">Profile</span>
         </div>
       </a>
-    </div>
+    </header>
   );
 };
 

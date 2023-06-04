@@ -1,13 +1,19 @@
 import styles from "./OrderDetails.module.css";
 import checked from "../../Images/done.png";
 
+import { useSelector } from "react-redux";
+
 const OrderDetails = () => {
+  const orderNumber = useSelector((state) => state.orderDetails.orderNumber);
+  console.log("number:");
+  console.log(orderNumber);
+
   return (
     <>
       <p
         className={`text text_type_digits-large ${styles.middle} ${styles.orderId} ml-25 mr-25 mt-4`}
       >
-        034536
+        {orderNumber}
       </p>
       <p
         className={`text text_type_main-default ${styles.middle} ${styles.orderIdText} ml-25 mr-25 mt-8`}

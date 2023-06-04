@@ -4,6 +4,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { useEffect } from "react";
 import { PropTypes } from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Modal = (props) => {
   const renderPlace = document.getElementById("root");

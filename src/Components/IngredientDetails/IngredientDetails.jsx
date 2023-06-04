@@ -1,18 +1,19 @@
 import styles from "./IngredientDetails.module.css";
-import { PropTypes } from "prop-types";
-import { ingrType } from "../../utils/prop-types";
+import { useSelector } from "react-redux";
 
-const IngredientDetails = (props) => {
+const IngredientDetails = () => {
+  const ingridient = useSelector((state) => state.ingredientDetails.ingridient);
+
   return (
     <div>
       <img
         className={`${styles.imageIngr} pl-30 pr-30`}
-        src={props.data.image_large}
-        alt={props.data.name}
+        src={ingridient.image_large}
+        alt={ingridient.name}
       />
 
       <p className={`text text_type_main-medium ${styles.middle}`}>
-        {props.data.name}
+        {ingridient.name}
       </p>
 
       <div
@@ -20,20 +21,20 @@ const IngredientDetails = (props) => {
       >
         <div className="text text_type_main-default text_color_inactive">
           <p>Calories, Kcal</p>
-          <p className="text text_type_digits-default">{props.data.calories}</p>
+          <p className="text text_type_digits-default">{ingridient.calories}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Proteins, g</p>
-          <p className="text text_type_digits-default">{props.data.proteins}</p>
+          <p className="text text_type_digits-default">{ingridient.proteins}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Fats, g</p>
-          <p className="text text_type_digits-default">{props.data.fat}</p>
+          <p className="text text_type_digits-default">{ingridient.fat}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Carbohydrates, g</p>
           <p className="text text_type_digits-default">
-            {props.data.carbohydrates}
+            {ingridient.carbohydrates}
           </p>
         </div>
       </div>
@@ -42,7 +43,3 @@ const IngredientDetails = (props) => {
 };
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  ingrType,
-};
