@@ -4,19 +4,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../Modal/Modal";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   addToBurgerConstructor,
   updateListBurgerConstructor,
   addBunToBurgerConstructor,
 } from "../../services/reducers/BurgerConstructorReducer";
-import {
-  addIngridient,
-  removeIngridient,
-} from "../../services/reducers/allIngridientsReducer";
+import { addIngridient } from "../../services/reducers/allIngridientsReducer";
 import { v4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -24,6 +22,7 @@ import OrderedIngredient from "../OrderedIngredient/OrderedIngredient";
 import { setOrder } from "../../services/actions/thunkFunctions";
 import { setOrderNumber } from "../../services/reducers/OrderDetailsReducer";
 import { addBun } from "../../services/reducers/allIngridientsReducer";
+import { getCookie } from "../../utils/utils";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -32,6 +31,7 @@ const BurgerConstructor = () => {
   const [hasError, setHasError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const ingrsInConstructor = useSelector(
     (state) => state.burgerConstructor.ingridients
   );
@@ -63,7 +63,6 @@ const BurgerConstructor = () => {
       dispatch(
         addToBurgerConstructor({
           item: item.element,
-
           id: v4(),
         })
       );
@@ -108,8 +107,11 @@ const BurgerConstructor = () => {
         setIsLoading(false);
       }
     };
-
-    fetchData();
+    if (getCookie("token")) {
+      fetchData();
+    } else {
+      navigate("/login");
+    }
   };
 
   return (

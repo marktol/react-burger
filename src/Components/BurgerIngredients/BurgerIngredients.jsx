@@ -13,14 +13,16 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { addIngridientDetails } from "../../services/reducers/IngredientDetailsReducer";
 import { useDrag } from "react-dnd";
+import { useHistory, useNavigate } from "react-router-dom";
 
 const BurgerIngredients = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Buns");
 
-  const ingridients = useSelector((state) => state.allIngridients.ingridients);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const ingridients = useSelector((state) => state.allIngridients.ingridients);
 
   const handleScroll = () => {
     const container = document.querySelector(`.${styles.scrollDiv}`);
@@ -63,6 +65,9 @@ const BurgerIngredients = () => {
 
   const onOpenModal = (ingredient) => {
     dispatch(addIngridientDetails(ingredient));
+
+    navigate(`/ingredients/${ingredient._id}`);
+
     setShowModal(true);
   };
 

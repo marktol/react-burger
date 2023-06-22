@@ -5,12 +5,16 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./AppHeader.module.css";
+import { useNavigate } from "react-router-dom";
 
 const AppHeader = () => {
+  const navigate = useNavigate();
   return (
     <header className={`ml-10 mr-10 mt-10 ${styles.flexContainer} `}>
       <a
-        href=""
+        onClick={() => {
+          navigate("/");
+        }}
         className={`mb-4 mt-4 mr-2 ${styles.headerLeft} ${styles.flexContainer} ${styles.linkColor}`}
       >
         <div className="ml-5 mr-1 mb-4 mt-4">
@@ -40,7 +44,9 @@ const AppHeader = () => {
       </div>
 
       <a
-        href=""
+        onClick={() => {
+          navigate("/profile");
+        }}
         className={`mb-4 mt-4 ${styles.headerRight} ${styles.flexContainer} ${styles.linkColor}`}
       >
         <div className="ml-5 mr-1 mb-4 mt-4">
