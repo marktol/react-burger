@@ -1,8 +1,15 @@
 import styles from "./IngredientDetails.module.css";
+
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const IngredientDetails = () => {
-  const ingridient = useSelector((state) => state.ingredientDetails.ingridient);
+  const { id } = useParams();
+
+  const ingredients = useSelector((state) =>
+    state.allIngridients.ingridients.filter((elem) => elem._id === id)
+  );
+  const ingridient = ingredients[0];
 
   return (
     <div>

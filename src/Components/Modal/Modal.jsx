@@ -4,7 +4,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { useEffect } from "react";
 import { PropTypes } from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const Modal = (props) => {
   const renderPlace = document.getElementById("root");
@@ -33,6 +33,46 @@ export const Modal = (props) => {
           <div className={`${styles.modalHeader} pr-10 pl-10 pt-10`}>
             <span className="text text_type_main-large">{props.title}</span>
             <CloseIcon onClick={props.closeModal} type="primary" />
+          </div>
+          {props.children}
+        </div>
+      </div>
+    </div>,
+    renderPlace
+  );
+};
+export const ModalIngr = (props) => {
+  const renderPlace = document.getElementById("root");
+  const navigate = useNavigate();
+
+  const closeModal = () => {
+    navigate(-1);
+  };
+
+  const escFunction = (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  return createPortal(
+    <div>
+      <div onClick={closeModal}>
+        <ModalOverlay isShowing={true} />
+      </div>
+
+      <div className={styles.show}>
+        <div className={styles.modalContent}>
+          <div className={`${styles.modalHeader} pr-10 pl-10 pt-10`}>
+            <span className="text text_type_main-large">{props.title}</span>
+            <CloseIcon onClick={closeModal} type="primary" />
           </div>
           {props.children}
         </div>

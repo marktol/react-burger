@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PropTypes } from "prop-types";
 import { ingrType } from "../../utils/prop-types";
-
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
@@ -13,14 +13,12 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { addIngridientDetails } from "../../services/reducers/IngredientDetailsReducer";
 import { useDrag } from "react-dnd";
-import { useHistory, useNavigate } from "react-router-dom";
 
 const BurgerIngredients = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Buns");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const ingridients = useSelector((state) => state.allIngridients.ingridients);
 
@@ -65,9 +63,6 @@ const BurgerIngredients = () => {
 
   const onOpenModal = (ingredient) => {
     dispatch(addIngridientDetails(ingredient));
-
-    navigate(`/ingredients/${ingredient._id}`);
-
     setShowModal(true);
   };
 
@@ -200,36 +195,44 @@ const BurgerElement = (props) => {
     type: props.dragType,
     item: { element: props.data },
   });
+  const location = useLocation();
 
   return (
-    <div className="mr-4" onClick={props.onClick} ref={drag}>
-      <div>
-        <div className={styles.counterTop}>
-          {props.count > 0 && (
-            <Counter
-              className={styles.counterTop}
-              count={props.count}
-              size="small"
-            />
-          )}
-        </div>
-      </div>
-      <img className="ml-4 mr-4" src={props.img} alt={props.name} />
-
-      <div className={styles.flexCost}>
+    <div className="mr-4" ref={drag}>
+      <Link
+        to={{
+          pathname: `/ingredients/${props.itemId}`,
+        }}
+        state={{ background: "modal" }}
+      >
         <div>
-          <span className="text text_type_digits-default mt-1 mb-1">
-            {props.cost}
-          </span>
+          <div className={styles.counterTop}>
+            {props.count > 0 && (
+              <Counter
+                className={styles.counterTop}
+                count={props.count}
+                size="small"
+              />
+            )}
+          </div>
         </div>
-        <div>
-          <CurrencyIcon type="primary" />
-        </div>
-      </div>
+        <img className="ml-4 mr-4" src={props.img} alt={props.name} />
 
-      <p className={`${styles.name} text text_type_main-small mr-1 ml-1`}>
-        {props.name}
-      </p>
+        <div className={styles.flexCost}>
+          <div>
+            <span className="text text_type_digits-default mt-1 mb-1">
+              {props.cost}
+            </span>
+          </div>
+          <div>
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+
+        <p className={`${styles.name} text text_type_main-small mr-1 ml-1`}>
+          {props.name}
+        </p>
+      </Link>
     </div>
   );
 };

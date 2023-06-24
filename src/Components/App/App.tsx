@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Login from "../pages/login";
 import BurgerMain from "../pages/BurgerMain";
 import Register from "../pages/Register";
@@ -6,18 +6,36 @@ import Ingredient from "../pages/Ingredient";
 import ResetPassword from "../pages/Reset-password";
 import ForgotPassword from "../pages/Forgot-password";
 import Profile from "../pages/Profile";
+import { useDispatch } from "react-redux";
 import {
   ProtectedRouteElement,
   ProtectedRouteElementLogginedUser,
   ProtectedRouteElementResetPass,
 } from "../ProtectedRouteElement/ProtectedRouteElement";
+import { ModalIngr } from "../Modal/Modal";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { useEffect } from "react";
+import { getIngredients } from "../../services/actions/thunkFunctions";
 
 export default function App() {
+  const dispatch = useDispatch<any>();
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(getIngredients());
+    };
+
+    fetchData();
+  }, [dispatch]);
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         <Route path="/" element={<BurgerMain />} />
-
+        {!background && (
+          <Route path="/ingredients/:id" element={<Ingredient />} />
+        )}
         <Route
           path="/login"
           element={<ProtectedRouteElementLogginedUser element={<Login />} />}
@@ -44,8 +62,20 @@ export default function App() {
           path="/profile"
           element={<ProtectedRouteElement element={<Profile />} />}
         />
-        <Route path="/ingredients/:id" element={<Ingredient />} />
+        <Route path="*" element={<BurgerMain />} />
       </Routes>
-    </BrowserRouter>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <ModalIngr title="Детали ингредиента">
+                <IngredientDetails />
+              </ModalIngr>
+            }
+          />
+        </Routes>
+      )}
+    </>
   );
 }
