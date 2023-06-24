@@ -33,14 +33,15 @@ function ForgotPassword() {
   return (
     <div>
       <AppHeader />
-      <body className={styles.main}>
-        <h1 className="text text_type_main-large">Password recovery</h1>
+      <body className={`${styles.main} mt-25`}>
+        <h1 className="text text_type_main-large mb-6">Password recovery</h1>
 
         <EmailInput
           onChange={onChangeEmail}
           value={email}
           name={"email"}
           isIcon={false}
+          extraClass="mb-6"
         />
 
         <Button
@@ -51,7 +52,9 @@ function ForgotPassword() {
         >
           Recover
         </Button>
-        <p className="text text_type_main-small">Do u remember password?</p>
+        <p className="text text_type_main-small mt-20">
+          Do u remember password?
+        </p>
       </body>
     </div>
   );

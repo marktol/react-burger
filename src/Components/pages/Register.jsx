@@ -39,8 +39,8 @@ function Register() {
   return (
     <div>
       <AppHeader />
-      <body className={styles.main}>
-        <h1 className="text text_type_main-large">Registration</h1>
+      <body className={`mt-25 ${styles.main}`}>
+        <h1 className="text text_type_main-large mb-6">Registration</h1>
 
         <Input
           type={"text"}
@@ -49,13 +49,14 @@ function Register() {
           value={name}
           name={"name"}
           size={"default"}
-          extraClass="ml-1"
+          extraClass="ml-1 mb-6"
         />
         <EmailInput
           onChange={onChangeEmail}
           value={email}
           name={"email"}
           isIcon={false}
+          extraClass="mb-6"
         />
 
         <PasswordInput
@@ -63,7 +64,7 @@ function Register() {
           placeholder={"Password"}
           value={password}
           name={"password"}
-          extraClass="mb-2"
+          extraClass="mb-6"
         />
         <Button
           onClick={submitForm}
@@ -73,7 +74,7 @@ function Register() {
         >
           Register
         </Button>
-        <p className="text text_type_main-small">
+        <p className="text text_type_main-small  mt-20">
           Do u have an account?
           <a
             onClick={() => {

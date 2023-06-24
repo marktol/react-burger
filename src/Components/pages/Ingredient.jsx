@@ -14,37 +14,47 @@ function Ingredient() {
     ingridient && (
       <div>
         <AppHeader />
-        <body className={styles.main}>
-          <h1 className="text text_type_main-large">Ingredient details</h1>
+        <body className={`${styles.main} mt-25`}>
+          <h1 className={`text text_type_main-large ${styles.middle}`}>
+            Ingredient details
+          </h1>
           <div>
-            <img src={ingridient.image_large} alt={ingridient.name} />
+            <div className={styles.ingrDiscription}>
+              <img src={ingridient.image_large} alt={ingridient.name} />
+            </div>
 
             <p className={`text text_type_main-medium ${styles.middle}`}>
               {ingridient.name}
             </p>
 
-            <div
-              className={`${styles.description} pl-25 pr-25 pb-15 ${styles.middle}`}
-            >
-              <div className="text text_type_main-default text_color_inactive">
+            <div className={`${styles.ingrDiscription}  `}>
+              <div
+                className={`text text_type_main-default text_color_inactive ${styles.middle}`}
+              >
                 <p>Calories, Kcal</p>
                 <p className="text text_type_digits-default">
                   {ingridient.calories}
                 </p>
               </div>
-              <div className="text text_type_main-default text_color_inactive">
+              <div
+                className={`text text_type_main-default text_color_inactive ${styles.middle} ml-4`}
+              >
                 <p>Proteins, g</p>
                 <p className="text text_type_digits-default">
                   {ingridient.proteins}
                 </p>
               </div>
-              <div className="text text_type_main-default text_color_inactive">
+              <div
+                className={`text text_type_main-default text_color_inactive ${styles.middle} ml-4`}
+              >
                 <p>Fats, g</p>
                 <p className="text text_type_digits-default">
                   {ingridient.fat}
                 </p>
               </div>
-              <div className="text text_type_main-default text_color_inactive">
+              <div
+                className={`text text_type_main-default text_color_inactive ${styles.middle} ml-4`}
+              >
                 <p>Carbohydrates, g</p>
                 <p className="text text_type_digits-default">
                   {ingridient.carbohydrates}

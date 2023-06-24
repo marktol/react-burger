@@ -7,6 +7,12 @@
   text-align: center;
   white-space: normal;
 }
+.ingrDiscription {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
 .description {
   display: flex;
   justify-content: space-between;

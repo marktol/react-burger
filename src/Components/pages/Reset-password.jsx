@@ -30,14 +30,14 @@ function ResetPassword() {
   return (
     <div>
       <AppHeader />
-      <body className={styles.main}>
-        <h1 className="text text_type_main-large">Reset Password</h1>
+      <body className={`${styles.main} mt-25`}>
+        <h1 className="text text_type_main-large mb-6">Reset Password</h1>
         <PasswordInput
           onChange={(e) => setPassword(e.target.value)}
           placeholder={"New password"}
           value={password}
           name={"password"}
-          extraClass="mb-2"
+          extraClass="mb-6"
         />
 
         <Input
@@ -47,6 +47,7 @@ function ResetPassword() {
           value={token}
           name={"token"}
           size={"default"}
+          extraClass="mb-6"
         />
 
         <Button
@@ -57,8 +58,8 @@ function ResetPassword() {
         >
           Save
         </Button>
-        <p className="text text_type_main-small">
-          Do u remember password?
+        <p className="text text_type_main-small mt-20">
+          Do u remember password?{" "}
           <a
             onClick={() => {
               navigate("/login");

@@ -39,14 +39,15 @@ function Login() {
   return (
     <div>
       <AppHeader />
-      <body className={styles.main}>
-        <h1 className="text text_type_main-large">Login</h1>
+      <body className={`${styles.main} mt-25`}>
+        <h1 className="text text_type_main-large mb-6">Login</h1>
 
         <EmailInput
           onChange={onChangeEmail}
           value={email}
           name={"email"}
           isIcon={false}
+          extraClass="mb-6"
         />
 
         <PasswordInput
@@ -54,7 +55,7 @@ function Login() {
           placeholder={"Password"}
           value={password}
           name={"password"}
-          extraClass="mb-2"
+          extraClass="mb-6"
         />
         <Button
           onClick={submitForm}
@@ -64,8 +65,8 @@ function Login() {
         >
           Login
         </Button>
-        <p>
-          Are u new?{" "}
+        <p className="mb-4 mt-20">
+          Are u new?{"  "}
           <a
             onClick={() => {
               navigate("/register");
@@ -75,7 +76,7 @@ function Login() {
           </a>
         </p>
         <p>
-          Forgot password?{" "}
+          Forgot password?{"  "}
           <a
             onClick={() => {
               navigate("/forgotpassword");
