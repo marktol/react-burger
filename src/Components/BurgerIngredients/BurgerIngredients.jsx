@@ -200,6 +200,7 @@ const BurgerElement = (props) => {
   return (
     <div className="mr-4" ref={drag}>
       <Link
+        className={styles.noDecoration}
         to={{
           pathname: `/ingredients/${props.itemId}`,
         }}
