@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
+
+import { getUser, refreshToken } from "../../services/actions/userFunctions";
+import { useSelector, useDispatch } from "react-redux";
 import { getCookie } from "../../utils/utils";
-import { useSelector } from "react-redux";
 
 export const ProtectedRouteElement = ({ element }) => {
-  if (getCookie("refreshToken")) {
+  const auth = useSelector((state) => state.userData.auth);
+  if (auth) {
     return element;
   } else {
     return <Navigate to="/login" replace />;
@@ -11,10 +14,11 @@ export const ProtectedRouteElement = ({ element }) => {
 };
 
 export const ProtectedRouteElementLogginedUser = ({ element }) => {
-  if (getCookie("refreshToken")) {
-    return <Navigate to="/" replace />;
-  } else {
+  const auth = useSelector((state) => state.userData.auth);
+  if (!auth) {
     return element;
+  } else {
+    return <Navigate to="/" replace />;
   }
 };
 export const ProtectedRouteElementResetPass = ({ element }) => {

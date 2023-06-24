@@ -85,7 +85,6 @@ export const getUser = createAsyncThunk("auth/user", async (token) => {
   }).then(checkReponse);
 
   const data = response;
-  console.log(data);
   return data;
 });
 
@@ -102,7 +101,6 @@ export const logout = createAsyncThunk("auth/logout", async (token) => {
   }).then(checkReponse);
 
   const data = response;
-  console.log(data);
   return data;
 });
 
@@ -119,6 +117,24 @@ export const refreshToken = createAsyncThunk("/auth/token", async (token) => {
   }).then(checkReponse);
 
   const data = response;
+
+  return data;
+});
+
+export const checkUser = createAsyncThunk("auth/checkUser", async () => {
+  debugger;
+  const userToken = "Bearer " + getCookie("token");
+  const response = await fetch(`${NORMA_API}/auth/user`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: userToken,
+    },
+  });
+
+  let data = response;
+  if (data.ok) data = true;
+  else data = false;
   console.log(data);
   return data;
 });

@@ -3,7 +3,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import styles from "./Login.module.css";
 import { useDispatch } from "react-redux";
 import { login } from "../../services/actions/userFunctions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import {
   Button,
@@ -67,23 +67,25 @@ function Login() {
         </Button>
         <p className="mb-4 mt-20">
           Are u new?{"  "}
-          <a
-            onClick={() => {
-              navigate("/register");
+          <Link
+            className={`mb-4 mt-4 ${styles.headerRight} ${styles.flexContainer} ${styles.linkColor}`}
+            to={{
+              pathname: `/register`,
             }}
           >
             Register
-          </a>
+          </Link>
         </p>
         <p>
           Forgot password?{"  "}
-          <a
-            onClick={() => {
-              navigate("/forgotpassword");
+          <Link
+            className={`mb-4 mt-4 ${styles.headerRight} ${styles.flexContainer} ${styles.linkColor}`}
+            to={{
+              pathname: `/forgot-password`,
             }}
           >
             Forgot Password
-          </a>
+          </Link>
         </p>
       </body>
     </div>

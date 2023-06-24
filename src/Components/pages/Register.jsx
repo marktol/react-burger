@@ -10,21 +10,19 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { register } from "../../services/actions/userFunctions";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-    console.log(password);
   };
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -33,7 +31,6 @@ function Register() {
     dispatch(
       register({ emailUser: email, passwordUser: password, nameUser: name })
     );
-    setIsLoading(false);
   };
 
   return (
@@ -75,14 +72,14 @@ function Register() {
           Register
         </Button>
         <p className="text text_type_main-small  mt-20">
-          Do u have an account?
-          <a
-            onClick={() => {
-              navigate("/login");
+          Do u have an account?{" "}
+          <Link
+            to={{
+              pathname: `/login`,
             }}
           >
             Login
-          </a>
+          </Link>
         </p>
       </body>
     </div>

@@ -2,7 +2,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import styles from "./Login.module.css";
 import { useState } from "react";
 import { forgotPassword } from "../../services/actions/userFunctions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import {
@@ -20,7 +20,7 @@ function ForgotPassword() {
   const fetchData = async () => {
     dispatch(forgotPassword(email)).then((data) => {
       if (data.payload.success) {
-        navigate("/resetpassword");
+        navigate("/reset-password");
         setIsLoading(false);
       }
     });
@@ -54,6 +54,13 @@ function ForgotPassword() {
         </Button>
         <p className="text text_type_main-small mt-20">
           Do u remember password?
+          <Link
+            to={{
+              pathname: `/login`,
+            }}
+          >
+            Login
+          </Link>
         </p>
       </body>
     </div>

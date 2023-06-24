@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { passwordReset } from "../../services/actions/userFunctions";
 
@@ -60,13 +60,13 @@ function ResetPassword() {
         </Button>
         <p className="text text_type_main-small mt-20">
           Do u remember password?{" "}
-          <a
-            onClick={() => {
-              navigate("/login");
+          <Link
+            to={{
+              pathname: `/login`,
             }}
           >
             Login
-          </a>
+          </Link>
         </p>
       </body>
     </div>
