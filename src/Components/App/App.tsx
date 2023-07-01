@@ -1,41 +1,85 @@
-import styles from "./App.module.css";
-import AppHeader from "../AppHeader/AppHeader";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { useEffect, useState } from "react";
-import { getIngredients } from "../../services/actions/thunkFunctions";
-
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import Login from "../pages/login";
+import BurgerMain from "../pages/BurgerMain";
+import Register from "../pages/Register";
+import Ingredient from "../pages/Ingredient";
+import ResetPassword from "../pages/Reset-password";
+import ForgotPassword from "../pages/Forgot-password";
+import Profile from "../pages/Profile";
 import { useDispatch } from "react-redux";
+import {
+  ProtectedRouteElement,
+  ProtectedRouteElementLogginedUser,
+  ProtectedRouteElementResetPass,
+} from "../ProtectedRouteElement/ProtectedRouteElement";
+import { ModalIngr } from "../Modal/Modal";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { useEffect } from "react";
+import { getIngredients } from "../../services/actions/thunkFunctions";
+import { checkUser } from "../../services/actions/userFunctions";
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
-function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+export default function App() {
   const dispatch = useDispatch<any>();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch(getIngredients());
-      setIsLoading(false);
+      dispatch(checkUser()).then(() => {
+        console.log("asd");
+      });
     };
 
     fetchData();
-  }, []);
-
+  }, [dispatch]);
   return (
-    <div className={styles.main} id="react-modals">
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main className={styles.menu}>
-          {!isLoading && <BurgerIngredients />}
-          {!isLoading && hasError && <h1>Uploading error, refresh page</h1>}
-          <BurgerConstructor />
-        </main>
-      </DndProvider>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<BurgerMain />} />
+        {!background && (
+          <Route path="/ingredients/:id" element={<Ingredient />} />
+        )}
+        <Route
+          path="/login"
+          element={<ProtectedRouteElementLogginedUser element={<Login />} />}
+        />
+
+        <Route
+          path="/register"
+          element={<ProtectedRouteElementLogginedUser element={<Register />} />}
+        />
+
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRouteElementResetPass element={<ResetPassword />} />
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <ProtectedRouteElementLogginedUser element={<ForgotPassword />} />
+          }
+        />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<Profile />} />}
+        />
+        <Route path="*" element={<BurgerMain />} />
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <ModalIngr title="Детали ингредиента">
+                <IngredientDetails />
+              </ModalIngr>
+            }
+          />
+        </Routes>
+      )}
+    </>
   );
 }
-
-export default App;
