@@ -15,11 +15,11 @@ function ResetPassword() {
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const fetchData = async () => {
     dispatch(passwordReset({ userPassword: password, userToken: token })).then(
-      (data) => {
+      (data: any) => {
         if (data.payload.success) {
           navigate("/login");
         }
@@ -43,7 +43,7 @@ function ResetPassword() {
         <Input
           type={"text"}
           placeholder={"Code fron letter"}
-          onChange={(e) => setToken(e.target.token)}
+          onChange={(e) => setToken(e.target.value)}
           value={token}
           name={"token"}
           size={"default"}

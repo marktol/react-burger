@@ -4,7 +4,15 @@ import { getCookie } from "../../utils/utils";
 
 export const register = createAsyncThunk(
   "data/register",
-  async ({ emailUser, passwordUser, nameUser }) => {
+  async ({
+    emailUser,
+    passwordUser,
+    nameUser,
+  }: {
+    emailUser: string;
+    passwordUser: string;
+    nameUser: string;
+  }) => {
     const response = await fetch(`${NORMA_API}/auth/register`, {
       headers: {
         Accept: "application/json",
@@ -25,7 +33,7 @@ export const register = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   "data/forgotPassword",
-  async (userEmail) => {
+  async (userEmail: string) => {
     const response = await fetch(`${NORMA_API}/password-reset`, {
       method: "POST",
       body: JSON.stringify({
@@ -40,7 +48,13 @@ export const forgotPassword = createAsyncThunk(
 
 export const passwordReset = createAsyncThunk(
   "data/passwordReset",
-  async ({ userPassword, userToken }) => {
+  async ({
+    userPassword,
+    userToken,
+  }: {
+    userPassword: string;
+    userToken: string;
+  }) => {
     const response = await fetch(`${NORMA_API}/password-reset/reset`, {
       method: "POST",
       body: JSON.stringify({
@@ -56,7 +70,13 @@ export const passwordReset = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "data/login",
-  async ({ emailUser, passwordUser }) => {
+  async ({
+    emailUser,
+    passwordUser,
+  }: {
+    emailUser: string;
+    passwordUser: string;
+  }) => {
     const response = await fetch(`${NORMA_API}/auth/login`, {
       headers: {
         Accept: "application/json",
@@ -74,7 +94,7 @@ export const login = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk("auth/user", async (token) => {
+export const getUser = createAsyncThunk("auth/user", async (token: string) => {
   const userToken = "Bearer " + token;
   const response = await fetch(`${NORMA_API}/auth/user`, {
     headers: {
@@ -88,7 +108,7 @@ export const getUser = createAsyncThunk("auth/user", async (token) => {
   return data;
 });
 
-export const logout = createAsyncThunk("auth/logout", async (token) => {
+export const logout = createAsyncThunk("auth/logout", async (token: string) => {
   const response = await fetch(`${NORMA_API}/auth/logout`, {
     headers: {
       Accept: "application/json",
@@ -104,25 +124,27 @@ export const logout = createAsyncThunk("auth/logout", async (token) => {
   return data;
 });
 
-export const refreshToken = createAsyncThunk("/auth/token", async (token) => {
-  const response = await fetch(`${NORMA_API}/auth/token`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify({
-      token: token,
-    }),
-  }).then(checkReponse);
+export const refreshToken = createAsyncThunk(
+  "/auth/token",
+  async (token: string) => {
+    const response = await fetch(`${NORMA_API}/auth/token`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        token: token,
+      }),
+    }).then(checkReponse);
 
-  const data = response;
+    const data = response;
 
-  return data;
-});
+    return data;
+  }
+);
 
 export const checkUser = createAsyncThunk("auth/checkUser", async () => {
-  debugger;
   const userToken = "Bearer " + getCookie("token");
   const response = await fetch(`${NORMA_API}/auth/user`, {
     headers: {
@@ -132,9 +154,8 @@ export const checkUser = createAsyncThunk("auth/checkUser", async () => {
     },
   });
 
-  let data = response;
-  if (data.ok) data = true;
+  let data: boolean = true;
+  if (response.ok) data = true;
   else data = false;
-  console.log(data);
   return data;
 });

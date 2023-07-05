@@ -1,8 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 export const NORMA_API = "https://norma.nomoreparties.space/api";
 
-export const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+export const checkReponse = (res: any) => {
+  return res.ok
+    ? res.json()
+    : res.json().then((err: any) => Promise.reject(err));
 };
 
 export const getIngredients = createAsyncThunk("data/fetchData", async () => {
@@ -12,7 +14,7 @@ export const getIngredients = createAsyncThunk("data/fetchData", async () => {
   return data;
 });
 
-export const setOrder = createAsyncThunk(
+export const setOrder = createAsyncThunk<string, Array<string>>(
   "data/setOrder",
   async (ingredientsId) => {
     console.log(ingredientsId);

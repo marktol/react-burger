@@ -17,14 +17,14 @@ function Register() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  const dispatch = useDispatch();
-  const onChangeEmail = (e) => {
+  const dispatch = useDispatch<any>();
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onChangeName = (e) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const submitForm = async () => {

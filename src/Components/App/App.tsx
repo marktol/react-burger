@@ -14,18 +14,21 @@ import {
 } from "../ProtectedRouteElement/ProtectedRouteElement";
 import { ModalIngr } from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getIngredients } from "../../services/actions/thunkFunctions";
 import { checkUser } from "../../services/actions/userFunctions";
 
 export default function App() {
   const dispatch = useDispatch<any>();
   const location = useLocation();
+  const [loading, setLoading] = useState<boolean>(true);
   const background = location.state && location.state.background;
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(getIngredients());
+      dispatch(getIngredients()).then(() => {
+        setLoading(false);
+      });
       dispatch(checkUser()).then(() => {
         console.log("asd");
       });
@@ -68,7 +71,7 @@ export default function App() {
         />
         <Route path="*" element={<BurgerMain />} />
       </Routes>
-      {background && (
+      {background && !loading && (
         <Routes>
           <Route
             path="/ingredients/:id"

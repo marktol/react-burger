@@ -15,10 +15,10 @@ function ForgotPassword() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const fetchData = async () => {
-    dispatch(forgotPassword(email)).then((data) => {
+    dispatch(forgotPassword(email)).then((data: any) => {
       if (data.payload.success) {
         navigate("/reset-password");
         setIsLoading(false);
@@ -26,7 +26,7 @@ function ForgotPassword() {
     });
   };
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 

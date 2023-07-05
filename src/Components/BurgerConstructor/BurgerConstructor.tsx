@@ -13,30 +13,38 @@ import {
   addToBurgerConstructor,
   updateListBurgerConstructor,
   addBunToBurgerConstructor,
+  IBurgerConstructor,
 } from "../../services/reducers/BurgerConstructorReducer";
-import { addIngridient } from "../../services/reducers/allIngridientsReducer";
+import { addIngredient } from "../../services/reducers/allIngredientsReducer";
 import { v4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import OrderedIngredient from "../OrderedIngredient/OrderedIngredient";
 import { setOrder } from "../../services/actions/thunkFunctions";
 import { setOrderNumber } from "../../services/reducers/OrderDetailsReducer";
-import { addBun } from "../../services/reducers/allIngridientsReducer";
+import { addBun } from "../../services/reducers/allIngredientsReducer";
 import { getCookie } from "../../utils/utils";
+import Ingredient from "../pages/Ingredient";
 
 import styles from "./BurgerConstructor.module.css";
+import { IStore } from "../../services/reducers/store";
+import { IIngredient } from "../../utils/interfaces";
 
 const BurgerConstructor = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
   const ingrsInConstructor = useSelector(
-    (state) => state.burgerConstructor.ingridients
+    (state: IStore) => state.burgerConstructor.ingredients
   );
-  const choosenBun = useSelector((state) => state.burgerConstructor.bun);
-  const totalPrice = useSelector((state) => state.burgerConstructor.totalPrice);
+  const choosenBun = useSelector(
+    (state: IStore) => state.burgerConstructor.bun
+  );
+  const totalPrice: number = useSelector(
+    (state: IStore) => state.burgerConstructor.totalPrice
+  );
 
   const ingrIds = ingrsInConstructor
     ? ingrsInConstructor.map((elem) => elem.item._id)
@@ -47,7 +55,7 @@ const BurgerConstructor = () => {
   const itemsForOrder = ingrIds.concat(bunId);
 
   const moveIngredient = useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex: number, hoverIndex: number) => {
       const dragCard = ingrsInConstructor[dragIndex];
       const newCards = [...ingrsInConstructor];
       newCards.splice(dragIndex, 1);
@@ -59,7 +67,7 @@ const BurgerConstructor = () => {
 
   const [, drop] = useDrop({
     accept: "ingr",
-    drop: (item) => {
+    drop: (item: { element: IIngredient }) => {
       dispatch(
         addToBurgerConstructor({
           item: item.element,
@@ -68,7 +76,7 @@ const BurgerConstructor = () => {
       );
 
       dispatch(
-        addIngridient({
+        addIngredient({
           id: item.element._id,
         })
       );
@@ -77,7 +85,7 @@ const BurgerConstructor = () => {
 
   const [, dropBun] = useDrop({
     accept: "bun",
-    drop: (item) => {
+    drop: (item: { element: IIngredient }) => {
       dispatch(
         addBunToBurgerConstructor({
           item: item.element,

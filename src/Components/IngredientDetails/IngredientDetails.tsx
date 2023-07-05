@@ -2,25 +2,26 @@ import styles from "./IngredientDetails.module.css";
 
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { IStore } from "../../services/reducers/store";
 
 const IngredientDetails = () => {
   const { id } = useParams();
 
-  const ingredients = useSelector((state) =>
-    state.allIngridients.ingridients.filter((elem) => elem._id === id)
+  const ingredients = useSelector((state: IStore) =>
+    state.allIngredients.ingredients.filter((elem) => elem._id === id)
   );
-  const ingridient = ingredients[0];
+  const ingredient = ingredients[0];
 
   return (
     <div>
       <img
         className={`${styles.imageIngr} pl-30 pr-30`}
-        src={ingridient.image_large}
-        alt={ingridient.name}
+        src={ingredient.image_large}
+        alt={ingredient.name}
       />
 
       <p className={`text text_type_main-medium ${styles.middle}`}>
-        {ingridient.name}
+        {ingredient.name}
       </p>
 
       <div
@@ -28,20 +29,20 @@ const IngredientDetails = () => {
       >
         <div className="text text_type_main-default text_color_inactive">
           <p>Calories, Kcal</p>
-          <p className="text text_type_digits-default">{ingridient.calories}</p>
+          <p className="text text_type_digits-default">{ingredient.calories}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Proteins, g</p>
-          <p className="text text_type_digits-default">{ingridient.proteins}</p>
+          <p className="text text_type_digits-default">{ingredient.proteins}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Fats, g</p>
-          <p className="text text_type_digits-default">{ingridient.fat}</p>
+          <p className="text text_type_digits-default">{ingredient.fat}</p>
         </div>
         <div className="text text_type_main-default text_color_inactive">
           <p>Carbohydrates, g</p>
           <p className="text text_type_digits-default">
-            {ingridient.carbohydrates}
+            {ingredient.carbohydrates}
           </p>
         </div>
       </div>

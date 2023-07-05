@@ -1,3 +1,4 @@
+import { IStore } from "../../services/reducers/store";
 import AppHeader from "../AppHeader/AppHeader";
 import styles from "../IngredientDetails/IngredientDetails.module.css";
 import { useSelector } from "react-redux";
@@ -5,13 +6,13 @@ import { useParams } from "react-router-dom";
 
 function Ingredient() {
   const { id } = useParams();
-  const ingredients = useSelector((state) =>
-    state.allIngridients.ingridients.filter((elem) => elem._id === id)
+  const ingredients = useSelector((state: IStore) =>
+    state.allIngredients.ingredients.filter((elem) => elem._id === id)
   );
-  const ingridient = ingredients[0];
+  const ingredient = ingredients[0];
 
   return (
-    ingridient && (
+    ingredient && (
       <div>
         <AppHeader />
         <body className={`${styles.main} mt-25`}>
@@ -20,11 +21,11 @@ function Ingredient() {
           </h1>
           <div>
             <div className={styles.ingrDiscription}>
-              <img src={ingridient.image_large} alt={ingridient.name} />
+              <img src={ingredient.image_large} alt={ingredient.name} />
             </div>
 
             <p className={`text text_type_main-medium ${styles.middle}`}>
-              {ingridient.name}
+              {ingredient.name}
             </p>
 
             <div className={`${styles.ingrDiscription}  `}>
@@ -33,7 +34,7 @@ function Ingredient() {
               >
                 <p>Calories, Kcal</p>
                 <p className="text text_type_digits-default">
-                  {ingridient.calories}
+                  {ingredient.calories}
                 </p>
               </div>
               <div
@@ -41,7 +42,7 @@ function Ingredient() {
               >
                 <p>Proteins, g</p>
                 <p className="text text_type_digits-default">
-                  {ingridient.proteins}
+                  {ingredient.proteins}
                 </p>
               </div>
               <div
@@ -49,7 +50,7 @@ function Ingredient() {
               >
                 <p>Fats, g</p>
                 <p className="text text_type_digits-default">
-                  {ingridient.fat}
+                  {ingredient.fat}
                 </p>
               </div>
               <div
@@ -57,7 +58,7 @@ function Ingredient() {
               >
                 <p>Carbohydrates, g</p>
                 <p className="text text_type_digits-default">
-                  {ingridient.carbohydrates}
+                  {ingredient.carbohydrates}
                 </p>
               </div>
             </div>

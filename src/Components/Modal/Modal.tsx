@@ -2,23 +2,32 @@ import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { useEffect } from "react";
-import { PropTypes } from "prop-types";
+import { KeyboardEvent, ReactNode, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
+interface IModalProps {
+  show: boolean;
+  title?: string;
+  closeModal: () => void;
+  children: ReactNode;
+}
 
-export const Modal = (props) => {
-  const renderPlace = document.getElementById("root");
+export const Modal = (props: IModalProps) => {
+  const renderPlace = document.getElementById("root") as
+    | Element
+    | DocumentFragment;
 
-  const escFunction = (e) => {
-    if (e.key === "Escape") {
+  const escFunction = (e: Event) => {
+    const keyboardEvent = e as unknown as KeyboardEvent;
+    if (keyboardEvent.key === "Escape") {
       props.closeModal();
     }
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener("keydown", escFunction);
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener("keydown", escFunction);
     };
   }, []);
 
@@ -41,24 +50,33 @@ export const Modal = (props) => {
     renderPlace
   );
 };
-export const ModalIngr = (props) => {
-  const renderPlace = document.getElementById("root");
+
+interface IModalIngrProps {
+  title: string;
+  children: ReactNode;
+}
+
+export const ModalIngr = (props: IModalIngrProps) => {
+  const renderPlace = document.getElementById("root") as
+    | Element
+    | DocumentFragment;
   const navigate = useNavigate();
 
   const closeModal = () => {
     navigate(-1);
   };
 
-  const escFunction = (e) => {
-    if (e.key === "Escape") {
+  const escFunction = (e: Event) => {
+    const keyboardEvent = e as unknown as KeyboardEvent;
+    if (keyboardEvent.key === "Escape") {
       closeModal();
     }
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener("keydown", escFunction);
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener("keydown", escFunction);
     };
   }, []);
 
@@ -80,10 +98,4 @@ export const ModalIngr = (props) => {
     </div>,
     renderPlace
   );
-};
-Modal.propTypes = {
-  closeModal: PropTypes.func,
-  show: PropTypes.bool,
-  title: PropTypes.string,
-  children: PropTypes.any,
 };

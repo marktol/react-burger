@@ -16,18 +16,18 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
   const submitForm = async () => {
     dispatch(login({ emailUser: email, passwordUser: password })).then(
-      (data) => {
+      (data: any) => {
         if (data.payload == undefined) {
         } else {
           navigate("/");

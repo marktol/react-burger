@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setOrder } from "../actions/thunkFunctions";
 
-const initialState = {
-  orderNumber: 0,
+const initialState: { orderNumber: string } = {
+  orderNumber: "",
 };
 export const OrderDetails = createSlice({
   name: "OrderDetails",

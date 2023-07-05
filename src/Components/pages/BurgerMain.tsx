@@ -13,7 +13,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 function BurgerMain() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     const fetchData = async () => {
