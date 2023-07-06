@@ -13,7 +13,6 @@ import {
   addToBurgerConstructor,
   updateListBurgerConstructor,
   addBunToBurgerConstructor,
-  IBurgerConstructor,
 } from "../../services/reducers/BurgerConstructorReducer";
 import { addIngredient } from "../../services/reducers/allIngredientsReducer";
 import { v4 } from "uuid";
@@ -24,7 +23,6 @@ import { setOrder } from "../../services/actions/thunkFunctions";
 import { setOrderNumber } from "../../services/reducers/OrderDetailsReducer";
 import { addBun } from "../../services/reducers/allIngredientsReducer";
 import { getCookie } from "../../utils/utils";
-import Ingredient from "../pages/Ingredient";
 
 import styles from "./BurgerConstructor.module.css";
 import { IStore } from "../../services/reducers/store";
@@ -125,7 +123,7 @@ const BurgerConstructor = () => {
   return (
     <>
       {showModal && (
-        <Modal closeModal={onCloseModal} show={showModal}>
+        <Modal closeModal={onCloseModal}>
           <OrderDetails />
         </Modal>
       )}

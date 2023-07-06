@@ -41,7 +41,13 @@ const AppHeader = () => {
       </Link>
 
       <div className={` ${styles.logo} mt-6 mb-6`}>
-        <Logo />
+        <Link
+          to={{
+            pathname: `/`,
+          }}
+        >
+          <Logo />
+        </Link>
       </div>
       <Link
         className={`mb-4 mt-4 ${styles.headerRight} ${styles.flexContainer} ${styles.linkColor}`}

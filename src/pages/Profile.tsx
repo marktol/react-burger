@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import AppHeader from "../AppHeader/AppHeader";
+
 import styles from "./Profile.module.css";
 import { useNavigate } from "react-router-dom";
 import {
   getUser,
   refreshToken,
   logout,
-} from "../../services/actions/userFunctions";
+} from "../services/actions/userFunctions";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/utils";
+import { getCookie } from "../utils/utils";
 
 import {
   Tab,
@@ -16,7 +16,7 @@ import {
   EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IStore } from "../../services/reducers/store";
+import { IStore } from "../services/reducers/store";
 
 function Profile() {
   const userName = useSelector((state: IStore) => state.userData.name);
@@ -58,8 +58,7 @@ function Profile() {
 
   return (
     <div>
-      <AppHeader />
-      <body className={styles.main}>
+      <div className={styles.main}>
         <div className={styles.tabs}>
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Profile
@@ -96,7 +95,7 @@ function Profile() {
             extraClass="mb-2"
           />
         </div>
-      </body>
+      </div>
     </div>
   );
 }

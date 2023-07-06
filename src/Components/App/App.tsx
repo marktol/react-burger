@@ -1,22 +1,23 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Login from "../pages/login";
-import BurgerMain from "../pages/BurgerMain";
-import Register from "../pages/Register";
-import Ingredient from "../pages/Ingredient";
-import ResetPassword from "../pages/Reset-password";
-import ForgotPassword from "../pages/Forgot-password";
-import Profile from "../pages/Profile";
+import Login from "../../pages/login";
+import BurgerMain from "../../pages/BurgerMain";
+import Register from "../../pages/Register";
+import Ingredient from "../../pages/Ingredient";
+import ResetPassword from "../../pages/Reset-password";
+import ForgotPassword from "../../pages/Forgot-password";
+import Profile from "../../pages/Profile";
 import { useDispatch } from "react-redux";
 import {
   ProtectedRouteElement,
   ProtectedRouteElementLogginedUser,
   ProtectedRouteElementResetPass,
 } from "../ProtectedRouteElement/ProtectedRouteElement";
-import { ModalIngr } from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { Modal } from "../Modal/Modal";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useEffect, useState } from "react";
 import { getIngredients } from "../../services/actions/thunkFunctions";
 import { checkUser } from "../../services/actions/userFunctions";
+import AppHeader from "../AppHeader/AppHeader";
 
 export default function App() {
   const dispatch = useDispatch<any>();
@@ -29,17 +30,16 @@ export default function App() {
       dispatch(getIngredients()).then(() => {
         setLoading(false);
       });
-      dispatch(checkUser()).then(() => {
-        console.log("asd");
-      });
+      dispatch(checkUser()).then(() => {});
     };
 
     fetchData();
   }, [dispatch]);
   return (
     <>
+      <AppHeader />
       <Routes>
-        <Route path="/" element={<BurgerMain />} />
+        {!loading && <Route path="/" element={<BurgerMain />} />}
         {!background && (
           <Route path="/ingredients/:id" element={<Ingredient />} />
         )}
@@ -76,9 +76,9 @@ export default function App() {
           <Route
             path="/ingredients/:id"
             element={
-              <ModalIngr title="Детали ингредиента">
+              <Modal title="Детали ингредиента">
                 <IngredientDetails />
-              </ModalIngr>
+              </Modal>
             }
           />
         </Routes>

@@ -5,19 +5,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingrType } from "../../utils/prop-types";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { addIngredientDetails } from "../../services/reducers/IngredientDetailsReducer";
 import { useDrag } from "react-dnd";
 import { IStore } from "../../services/reducers/store";
 import { IIngredient } from "../../utils/interfaces";
 
+// Импортируйте необходимые стили и компоненты
+
 const BurgerIngredients = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Buns");
+  const containerRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -26,59 +29,40 @@ const BurgerIngredients = () => {
   );
 
   const handleScroll = () => {
-    const container: HTMLElement | null = document.querySelector(
-      `.${styles.scrollDiv}`
-    );
-    const headers = container?.querySelectorAll(
-      "p.text_type_main-medium"
-    ) as NodeListOf<HTMLParagraphElement>;
+    const container: any = containerRef.current;
+    if (!container) return;
 
-    if (headers.length === 0) {
-      // Обработка случая, когда нет элементов headers
-      return;
-    }
+    const headers: NodeListOf<HTMLParagraphElement> =
+      container.querySelectorAll("p.text_type_main-medium");
 
-    let closestHeader: HTMLParagraphElement = headers[0];
-    let closestHeaderDistance: number = Math.abs(
-      container?.getBoundingClientRect().top ??
-        0 - closestHeader.getBoundingClientRect().top ??
-        0
-    );
+    const containerMiddleY: number = container.getBoundingClientRect().top;
 
-    headers.forEach((header) => {
-      const distance: number = Math.abs(
-        container?.getBoundingClientRect().top ??
-          0 - header.getBoundingClientRect().top
-      );
+    let closestHeader: any = null;
+    let closestDistance: number = Infinity;
 
-      if (distance < closestHeaderDistance) {
+    headers.forEach((header: HTMLParagraphElement) => {
+      const headerMiddleY: number =
+        header.getBoundingClientRect().top + header.offsetHeight / 2;
+      const distance: number = Math.abs(containerMiddleY - headerMiddleY);
+
+      if (distance < closestDistance) {
         closestHeader = header;
-        closestHeaderDistance = distance;
+        closestDistance = distance;
       }
     });
 
-    setActiveTab(closestHeader.id);
+    if (closestHeader) {
+      setActiveTab(closestHeader.id);
+    }
   };
 
   useEffect(() => {
-    const container: HTMLElement | null = document.querySelector(
-      `.${styles.scrollDiv}`
-    );
-
-    const handleScroll = (event: Event) => {
-      // Handle scroll event here
-    };
-
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      if (container) {
-        container.removeEventListener("scroll", handleScroll);
-      }
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [ingredients]);
+  }, []);
 
   const onCloseModal = () => {
     setShowModal(false);
@@ -93,11 +77,7 @@ const BurgerIngredients = () => {
   return (
     <>
       {showModal && (
-        <Modal
-          closeModal={onCloseModal}
-          show={showModal}
-          title="Подробности ингредиента"
-        >
+        <Modal closeModal={onCloseModal} title="Подробности ингредиента">
           <IngredientDetails />
         </Modal>
       )}
@@ -130,7 +110,11 @@ const BurgerIngredients = () => {
             </Tab>
           </div>
         </div>
-        <div className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
+        <div
+          className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}
+          ref={containerRef}
+          onScroll={handleScroll}
+        >
           <p
             id="Buns"
             className={`text text_type_main-medium ${styles.textLeft}`}
@@ -156,7 +140,6 @@ const BurgerIngredients = () => {
                 />
               ))}
           </div>
-
           <p
             id="Sauces"
             className={`text text_type_main-medium ${styles.textLeft}`}
@@ -182,7 +165,6 @@ const BurgerIngredients = () => {
                 />
               ))}
           </div>
-
           <p
             id="Toppings"
             className={`text text_type_main-medium ${styles.textLeft}`}

@@ -14,8 +14,6 @@ export const OrderDetails = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(setOrder.fulfilled, (state, action) => {
-      console.log(action.payload);
-
       state.orderNumber = action.payload;
     });
   },
