@@ -2,11 +2,12 @@ import styles from "./OrderDetails.module.css";
 import checked from "../../Images/done.png";
 
 import { useSelector } from "react-redux";
+import { IStore } from "../../services/reducers/store";
 
 const OrderDetails = () => {
-  const orderNumber = useSelector((state) => state.orderDetails.orderNumber);
-  console.log("number:");
-  console.log(orderNumber);
+  const orderNumber = useSelector(
+    (state: IStore) => state.orderDetails.orderNumber
+  );
 
   return (
     <>

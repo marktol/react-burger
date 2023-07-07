@@ -8,8 +8,9 @@ import {
   checkUser,
 } from "../actions/userFunctions";
 import { setCookie, deleteCookie } from "../../utils/utils";
+import { IUser } from "../../utils/interfaces";
 
-const initialState = {
+const initialState: IUser = {
   name: "",
   email: "",
   accessToken: "",
@@ -18,7 +19,7 @@ const initialState = {
 };
 
 export const userData = createSlice({
-  name: "allIngridients",
+  name: "allIngredients",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -45,19 +46,21 @@ export const userData = createSlice({
       state.accessToken = "";
       state.email = "";
       state.name = "";
+      state.auth = false;
       deleteCookie("token");
       deleteCookie("refreshToken");
     });
-    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+    builder.addCase(forgotPassword.fulfilled, (state) => {
       state.emailSent = true;
     });
     builder.addCase(checkUser.fulfilled, (state, action) => {
-      state.auth = action.payload;
+      if (action.payload) {
+        state.auth = true;
+      }
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { logIn } = userData.actions;
 
 export default userData.reducer;

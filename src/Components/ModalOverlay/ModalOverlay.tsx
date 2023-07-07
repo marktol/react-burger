@@ -1,7 +1,6 @@
 import styles from "./ModalOverlay.module.css";
-import { PropTypes } from "prop-types";
 
-const ModalOverlay = (props) => {
+const ModalOverlay = (props: { isShowing: boolean }) => {
   return (
     <div
       className={props.isShowing ? `${styles.show}` : `${styles.hide}`}
@@ -9,7 +8,3 @@ const ModalOverlay = (props) => {
   );
 };
 export default ModalOverlay;
-
-ModalOverlay.propTypes = {
-  isShowing: PropTypes.bool,
-};
