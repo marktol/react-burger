@@ -150,25 +150,24 @@ const BurgerConstructor = () => {
               />
             )}
           </div>
-          <DndProvider backend={HTML5Backend}>
-            <div
-              ref={drop}
-              className={`${styles.scrollCm} ${styles.ingrs} custom-scroll `}
-            >
-              {ingrsInConstructor.length > 0 ? (
-                ingrsInConstructor.map((elem, index) => (
-                  <OrderedIngredient
-                    key={elem.id}
-                    elem={elem}
-                    moveIngredient={moveIngredient}
-                    index={index}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
-          </DndProvider>
+
+          <div
+            ref={drop}
+            className={`${styles.scrollCm} ${styles.ingrs} custom-scroll `}
+          >
+            {ingrsInConstructor.length > 0 ? (
+              ingrsInConstructor.map((elem, index) => (
+                <OrderedIngredient
+                  key={elem.id}
+                  elem={elem}
+                  moveIngredient={moveIngredient}
+                  index={index}
+                />
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
 
           <div className={`${styles.botIngr} mr-5`}>
             {choosenBun ? (

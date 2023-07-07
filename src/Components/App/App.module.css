@@ -6,3 +6,7 @@
 .main {
   overflow: hidden;
 }
+.loader {
+  display: flex;
+  justify-content: center;
+}
