@@ -8,7 +8,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 function BurgerMain() {
   return (
-    <div className={styles.main} id="react-modals">
+    <div className={styles.main}>
       <DndProvider backend={HTML5Backend}>
         <main className={styles.menu}>
           <BurgerIngredients />

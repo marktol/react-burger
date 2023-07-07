@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { KeyboardEvent, ReactNode, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 interface IModalProps {
@@ -16,23 +16,20 @@ export const Modal = (props: IModalProps) => {
     | Element
     | DocumentFragment;
   const navigate = useNavigate();
-  const escFunction = (e: Event) => {
-    const keyboardEvent = e as unknown as KeyboardEvent;
-    if (keyboardEvent.key === "Escape") {
-      if (props.closeModal) {
-        props.closeModal();
-      } else {
-        navigate(-1);
-      }
-    }
-  };
-
-  const clickHandler = () => {
+  const closeMyPopup = () => {
     if (props.closeModal) {
       props.closeModal();
     } else {
       navigate(-1);
     }
+  };
+
+  const escFunction = (e: KeyboardEvent) => {
+    if (e.key === "Escape") closeMyPopup();
+  };
+
+  const clickHandler = () => {
+    closeMyPopup();
   };
 
   useEffect(() => {

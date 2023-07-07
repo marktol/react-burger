@@ -7,7 +7,6 @@ import { IIngredient } from "../../utils/interfaces";
 
 const IngredientDetails = () => {
   const { id } = useParams();
-
   const ingredients = useSelector((state: IStore) =>
     state.allIngredients.ingredients.filter((elem) => elem._id === id)
   );

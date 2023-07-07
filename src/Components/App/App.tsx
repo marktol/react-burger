@@ -29,13 +29,11 @@ export default function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(checkUser())
-        .then(() => {
-          dispatch(getIngredients());
-        })
-        .then(() => {
+      dispatch(checkUser()).then(() => {
+        dispatch(getIngredients()).then(() => {
           setLoading(false);
         });
+      });
     };
 
     fetchData();
