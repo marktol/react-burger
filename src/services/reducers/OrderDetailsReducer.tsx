@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setOrder } from "../actions/thunkFunctions";
 
-const initialState = {
-  orderNumber: 0,
+const initialState: { orderNumber: string } = {
+  orderNumber: "",
 };
 export const OrderDetails = createSlice({
   name: "OrderDetails",
@@ -14,8 +14,6 @@ export const OrderDetails = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(setOrder.fulfilled, (state, action) => {
-      console.log(action.payload);
-
       state.orderNumber = action.payload;
     });
   },

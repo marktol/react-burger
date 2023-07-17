@@ -1,15 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { IBurgerIngredient, IIngredient } from "../../utils/interfaces";
 
-const initialState = {
-  ingridients: [],
+export interface IBurgerConstructor {
+  ingredients: Array<IBurgerIngredient>;
+  bun: IIngredient | null;
+  totalPrice: number;
+}
+
+const initialState: IBurgerConstructor = {
+  ingredients: [],
   bun: null,
   totalPrice: 0,
 };
 
-const recalcTotal = (state) => {
+const recalcTotal = (state: IBurgerConstructor) => {
   const bunPrice = state.bun ? state.bun.price * 2 : 0;
+
   state.totalPrice =
-    state.ingridients
+    state.ingredients
       .map((ingredient) => ingredient.item.price)
       .reduce((partialSum, a) => partialSum + a, 0) + bunPrice;
 };
@@ -19,18 +27,21 @@ export const burgerConstructor = createSlice({
   initialState,
   reducers: {
     addToBurgerConstructor: (state, action) => {
-      const { item, id } = action.payload; // Добавляем эти строки для определения переменных item и id
-      state.ingridients.push({ item, id });
+      state.ingredients.push({
+        item: action.payload.item,
+        id: action.payload.id,
+      });
+
       recalcTotal(state);
     },
     deleteFromBurgerConstructor: (state, action) => {
       const { id } = action.payload;
-      state.ingridients = state.ingridients.filter((item) => item.id !== id);
+      state.ingredients = state.ingredients.filter((item) => item.id !== id);
       recalcTotal(state);
     },
     updateListBurgerConstructor: (state, action) => {
       const { newList } = action.payload;
-      state.ingridients = [...newList];
+      state.ingredients = [...newList];
       recalcTotal(state);
     },
     addBunToBurgerConstructor: (state, action) => {

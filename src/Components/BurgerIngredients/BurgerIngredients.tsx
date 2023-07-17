@@ -3,77 +3,81 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { PropTypes } from "prop-types";
 import { ingrType } from "../../utils/prop-types";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
-import { addIngridientDetails } from "../../services/reducers/IngredientDetailsReducer";
+import { addIngredientDetails } from "../../services/reducers/IngredientDetailsReducer";
 import { useDrag } from "react-dnd";
+import { IStore } from "../../services/reducers/store";
+import { IIngredient } from "../../utils/interfaces";
+
+// Импортируйте необходимые стили и компоненты
 
 const BurgerIngredients = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("Buns");
+  const containerRef = useRef(null);
 
   const dispatch = useDispatch();
 
-  const ingridients = useSelector((state) => state.allIngridients.ingridients);
+  const ingredients = useSelector(
+    (state: IStore) => state.allIngredients.ingredients
+  );
 
   const handleScroll = () => {
-    const container = document.querySelector(`.${styles.scrollDiv}`);
-    const headers = container.querySelectorAll("p.text_type_main-medium");
+    const container: any = containerRef.current;
+    if (!container) return;
 
-    let closestHeader = headers[0];
-    let closestHeaderDistance = Math.abs(
-      container.getBoundingClientRect().top -
-        closestHeader.getBoundingClientRect().top
-    );
+    const headers: NodeListOf<HTMLParagraphElement> =
+      container.querySelectorAll("p.text_type_main-medium");
 
-    headers.forEach((header) => {
-      const distance = Math.abs(
-        container.getBoundingClientRect().top -
-          header.getBoundingClientRect().top
-      );
+    const containerMiddleY: number = container.getBoundingClientRect().top;
 
-      if (distance < closestHeaderDistance) {
+    let closestHeader: any = null;
+    let closestDistance: number = Infinity;
+
+    headers.forEach((header: HTMLParagraphElement) => {
+      const headerMiddleY: number =
+        header.getBoundingClientRect().top + header.offsetHeight / 2;
+      const distance: number = Math.abs(containerMiddleY - headerMiddleY);
+
+      if (distance < closestDistance) {
         closestHeader = header;
-        closestHeaderDistance = distance;
+        closestDistance = distance;
       }
     });
 
-    setActiveTab(closestHeader.id);
+    if (closestHeader) {
+      setActiveTab(closestHeader.id);
+    }
   };
 
   useEffect(() => {
-    const container = document.querySelector(`.${styles.scrollDiv}`);
-    container.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [ingridients]);
+  }, []);
 
   const onCloseModal = () => {
     setShowModal(false);
-    dispatch(addIngridientDetails({}));
+    dispatch(addIngredientDetails({}));
   };
 
-  const onOpenModal = (ingredient) => {
-    dispatch(addIngridientDetails(ingredient));
+  const onOpenModal = (ingredient: IIngredient) => {
+    dispatch(addIngredientDetails(ingredient));
     setShowModal(true);
   };
 
   return (
     <>
       {showModal && (
-        <Modal
-          closeModal={onCloseModal}
-          show={showModal}
-          title="Подробности ингредиента"
-        >
+        <Modal closeModal={onCloseModal} title="Подробности ингредиента">
           <IngredientDetails />
         </Modal>
       )}
@@ -106,7 +110,11 @@ const BurgerIngredients = () => {
             </Tab>
           </div>
         </div>
-        <div className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}>
+        <div
+          className={`custom-scroll mb-1 pb-1 ${styles.scrollDiv}`}
+          ref={containerRef}
+          onScroll={handleScroll}
+        >
           <p
             id="Buns"
             className={`text text_type_main-medium ${styles.textLeft}`}
@@ -114,7 +122,7 @@ const BurgerIngredients = () => {
             Булки
           </p>
           <div className={styles.items}>
-            {ingridients
+            {ingredients
               .filter((elem) => elem.type === "bun")
               .map((bun) => (
                 <BurgerElement
@@ -132,7 +140,6 @@ const BurgerIngredients = () => {
                 />
               ))}
           </div>
-
           <p
             id="Sauces"
             className={`text text_type_main-medium ${styles.textLeft}`}
@@ -140,7 +147,7 @@ const BurgerIngredients = () => {
             Соусы
           </p>
           <div className={styles.items}>
-            {ingridients
+            {ingredients
               .filter((elem) => elem.type === "sauce")
               .map((ingr) => (
                 <BurgerElement
@@ -158,7 +165,6 @@ const BurgerIngredients = () => {
                 />
               ))}
           </div>
-
           <p
             id="Toppings"
             className={`text text_type_main-medium ${styles.textLeft}`}
@@ -166,7 +172,7 @@ const BurgerIngredients = () => {
             Начинки
           </p>
           <div className={styles.items}>
-            {ingridients
+            {ingredients
               .filter((elem) => elem.type === "main")
               .map((ingr) => (
                 <BurgerElement
@@ -190,7 +196,20 @@ const BurgerIngredients = () => {
   );
 };
 
-const BurgerElement = (props) => {
+interface IBurgerElementProps {
+  key: string;
+
+  img: string;
+  cost: number;
+  name: string;
+  data: IIngredient;
+  count: number;
+  onClick: (ingredient: IIngredient) => void;
+  dragType: string;
+  itemId: string;
+}
+
+const BurgerElement = (props: IBurgerElementProps) => {
   const [, drag] = useDrag({
     type: props.dragType,
     item: { element: props.data },
@@ -208,13 +227,7 @@ const BurgerElement = (props) => {
       >
         <div>
           <div className={styles.counterTop}>
-            {props.count > 0 && (
-              <Counter
-                className={styles.counterTop}
-                count={props.count}
-                size="small"
-              />
-            )}
+            {props.count > 0 && <Counter count={props.count} size="small" />}
           </div>
         </div>
         <img className="ml-4 mr-4" src={props.img} alt={props.name} />
@@ -239,7 +252,3 @@ const BurgerElement = (props) => {
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingrType),
-};

@@ -1,51 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredients } from "../actions/thunkFunctions";
+import { IAllIngredients, IIngredient } from "../../utils/interfaces";
 
-const initialState = {
-  ingridients: [],
+const initialState: IAllIngredients = {
+  ingredients: [],
   isLoading: true,
   hasError: false,
 };
 
-export const allIngridients = createSlice({
-  name: "allIngridients",
+export const allIngredients = createSlice({
+  name: "allIngredients",
   initialState,
   reducers: {
-    addIngridient: (state, action) => {
-      state.ingridients = state.ingridients.map((ingr) => {
+    addIngredient: (state, action) => {
+      state.ingredients = state.ingredients.map((ingr: IIngredient) => {
         if (ingr._id === action.payload.id) ingr.count += 1;
         return ingr;
       });
     },
-    removeIngridient: (state, action) => {
-      state.ingridients = state.ingridients.map((ingr) => {
+    removeIngredient: (state, action) => {
+      state.ingredients = state.ingredients.map((ingr) => {
         if (ingr._id === action.payload.id) ingr.count -= 1;
-        console.log(action.payload.id);
+
         return ingr;
       });
     },
     addBun: (state, action) => {
-      state.ingridients = state.ingridients.map((ingr) => {
+      state.ingredients = state.ingredients.map((ingr) => {
         if (ingr._id === action.payload.id) ingr.count = 2;
         if (ingr.type === "bun" && ingr._id !== action.payload.id)
           ingr.count = 0;
-        console.log(action.payload.id);
+
         return ingr;
       });
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getIngredients.fulfilled, (state, action) => {
-      state.ingridients = action.payload.map((ingridient) => {
-        ingridient.count = 0;
-        return ingridient;
+      state.ingredients = action.payload.map((ingredient: IIngredient) => {
+        ingredient.count = 0;
+        return ingredient;
       });
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addIngridients, addIngridient, removeIngridient, addBun } =
-  allIngridients.actions;
+export const { addIngredient, removeIngredient, addBun } =
+  allIngredients.actions;
 
-export default allIngridients.reducer;
+export default allIngredients.reducer;

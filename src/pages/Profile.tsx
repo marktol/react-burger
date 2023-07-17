@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import AppHeader from "../AppHeader/AppHeader";
+
 import styles from "./Profile.module.css";
 import { useNavigate } from "react-router-dom";
 import {
   getUser,
   refreshToken,
   logout,
-} from "../../services/actions/userFunctions";
+} from "../services/actions/userFunctions";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/utils";
+import { getCookie } from "../utils/utils";
 
 import {
   Tab,
@@ -16,23 +16,26 @@ import {
   EmailInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IStore } from "../services/reducers/store";
 
 function Profile() {
-  const userName = useSelector((state) => state.userData.name);
-  const userEmail = useSelector((state) => state.userData.email);
+  const userName = useSelector((state: IStore) => state.userData.name);
+  const userEmail = useSelector((state: IStore) => state.userData.email);
 
   const navigate = useNavigate();
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const [current, setCurrent] = useState("one");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
-  const onChangeEmail = (e) => {};
-  const onChangePassword = (e) => {};
   const logOut = async () => {
-    dispatch(logout(getCookie("refreshToken"))).then((data) => {
+    const refreshToken: string = getCookie("refreshToken");
+    dispatch(logout(refreshToken)).then((data: any) => {
       if (data.payload && data.payload.success == true) {
         navigate("/login");
       }
@@ -41,7 +44,7 @@ function Profile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(getUser(getCookie("token"))).then((data) => {
+      dispatch(getUser(getCookie("token"))).then((data: any) => {
         if (data.error && data.error.message === "jwt expired") {
           dispatch(refreshToken(getCookie("refreshToken"))).then(() => {
             fetchData();
@@ -55,8 +58,7 @@ function Profile() {
 
   return (
     <div>
-      <AppHeader />
-      <body className={styles.main}>
+      <div className={styles.main}>
         <div className={styles.tabs}>
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
             Profile
@@ -70,6 +72,7 @@ function Profile() {
         </div>
         <div>
           <Input
+            onChange={onChangeName}
             type={"text"}
             placeholder={"Name"}
             value={userName}
@@ -77,7 +80,12 @@ function Profile() {
             size={"default"}
             extraClass="ml-1"
           />
-          <EmailInput value={userEmail} name={"email"} isIcon={false} />
+          <EmailInput
+            value={userEmail}
+            name={"email"}
+            isIcon={false}
+            onChange={onChangeEmail}
+          />
 
           <PasswordInput
             onChange={onChangePassword}
@@ -87,7 +95,7 @@ function Profile() {
             extraClass="mb-2"
           />
         </div>
-      </body>
+      </div>
     </div>
   );
 }

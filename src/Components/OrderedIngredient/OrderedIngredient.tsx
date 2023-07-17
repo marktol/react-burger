@@ -1,17 +1,26 @@
 import styles from "./OrderedIngredient.module.css";
 import { useDispatch } from "react-redux";
-import { useRef } from "react";
-import { useDrop, useDrag } from "react-dnd";
+import { DragEventHandler, useRef } from "react";
+import { useDrop, useDrag, XYCoord } from "react-dnd";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteFromBurgerConstructor } from "../../services/reducers/BurgerConstructorReducer";
-import { removeIngridient } from "../../services/reducers/allIngridientsReducer";
+import { removeIngredient } from "../../services/reducers/allIngredientsReducer";
+import { IBurgerIngredient, IIngredient } from "../../utils/interfaces";
 
-const OrderedIngredient = ({ elem, index, moveIngredient }) => {
-  const ref = useRef(null);
-  const [{ handlerId }, drop] = useDrop({
+const OrderedIngredient = ({
+  elem,
+  index,
+  moveIngredient,
+}: {
+  elem: IBurgerIngredient;
+  index: number;
+  moveIngredient: (dragIndex: any, hoverIndex: any) => void;
+}) => {
+  const ref: React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const [{ handlerId }, drop] = useDrop<any, void, { handlerId: any }>({
     accept: "component",
     hover(hoverElem, monitor) {
       if (!ref.current) {
@@ -25,14 +34,18 @@ const OrderedIngredient = ({ elem, index, moveIngredient }) => {
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
+      const clientOffset: XYCoord | null = monitor.getClientOffset();
+      if (clientOffset !== null) {
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
       }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
+
       moveIngredient(dragIndex, hoverIndex);
       hoverElem.index = hoverIndex;
     },
@@ -46,7 +59,10 @@ const OrderedIngredient = ({ elem, index, moveIngredient }) => {
 
   const dispatch = useDispatch();
 
-  const preventDefault = (e) => e.preventDefault();
+  const preventDefault: DragEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    // Rest of your code
+  };
 
   return (
     <div
@@ -70,7 +86,7 @@ const OrderedIngredient = ({ elem, index, moveIngredient }) => {
             })
           );
           dispatch(
-            removeIngridient({
+            removeIngredient({
               id: elem.item._id,
             })
           );
