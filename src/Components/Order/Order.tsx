@@ -7,7 +7,10 @@ import styles from "./OrderFromHistory.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderHistoryComponent } from "../OrderFromHistory/OrderFromHistory";
 import { useEffect } from "react";
-import { WS_CONNECTION_START } from "../../services/actions/socketMiddleware";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../services/actions/socketMiddleware";
 import { getCookie } from "../../utils/utils";
 const url = "wss://norma.nomoreparties.space/orders/all";
 const urlUser = "wss://norma.nomoreparties.space/orders";
@@ -15,6 +18,13 @@ const urlUser = "wss://norma.nomoreparties.space/orders";
 export const Order = ({ user }: { user: boolean }) => {
   const dispatch = useDispatch();
   const wsConnected = useSelector((state: IStore) => state.ws.wsConnected);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
+
   useEffect(() => {
     if (!wsConnected && !user) {
       dispatch({ type: WS_CONNECTION_START, payload: url });
