@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getCookie } from "../../utils/utils";
 export const NORMA_API = "https://norma.nomoreparties.space/api";
 
 interface ApiResponse {
@@ -26,6 +27,7 @@ export const setOrder = createAsyncThunk<string, Array<string>>(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("token"),
       },
       method: "POST",
       body: JSON.stringify({
@@ -34,6 +36,7 @@ export const setOrder = createAsyncThunk<string, Array<string>>(
     }).then(checkReponse);
 
     const data = response.order.number;
+    console.log(data);
     return data;
   }
 );

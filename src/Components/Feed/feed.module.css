@@ -1,0 +1,88 @@
+.textLeft {
+  text-align: left;
+}
+.scrollDiv {
+  overflow-y: scroll;
+  height: 80vh;
+}
+
+.flexContainer {
+  display: flex;
+}
+
+.border {
+  background-color: #2f2f37;
+  border-radius: 30px;
+}
+.flexCost {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexLine {
+  display: flex;
+  justify-content: space-between;
+}
+.flexContainerMain {
+  display: flex;
+  justify-content: center; /* Располагает div'ы по краям */
+}
+
+.leftDiv {
+  flex: 0 0 45%; /* Занимает 50% ширины родителя (левая половина) */
+}
+
+.rightDiv {
+  flex: 0 0 35%; /* Занимает 50% ширины родителя (правая половина) */
+}
+.ReadyDiv {
+  flex: 0 0 50%; /* Занимает 50% ширины родителя (левая половина) */
+}
+
+.InprogressDiv {
+  flex: 0 0 50%; /* Занимает 50% ширины родителя (правая половина) */
+}
+
+.orderIdText {
+  height: 120px;
+  width: 520px;
+  text-shadow: rgb(0, 98, 255) 8px 0 10px;
+}
+.done {
+  color: aqua;
+}
+
+.pictureContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.picturesStyle {
+  margin-left: -20px;
+  width: 61px;
+  height: 61px;
+  background: #131316;
+  border-radius: 100%;
+  border: solid;
+  border-color: purple;
+}
+
+.imageOverlay {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.noDecoration {
+  text-decoration: none;
+  color: white;
+}

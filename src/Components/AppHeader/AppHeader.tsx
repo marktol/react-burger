@@ -27,7 +27,7 @@ const AppHeader = () => {
       <Link
         className={`mb-4 mt-4 mr-2 ${styles.headerLeft} ${styles.flexContainer} ${styles.linkColor}`}
         to={{
-          pathname: `/`,
+          pathname: `/feed`,
         }}
       >
         <div className="ml-5 mr-1 mb-4 mt-4">

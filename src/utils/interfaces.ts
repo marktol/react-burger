@@ -33,3 +33,22 @@ export interface IUser {
   emailSent: boolean;
   auth: boolean;
 }
+
+export interface IOrder {
+  length: number;
+  createdAt: string;
+  ingredients: Array<string>;
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+}
+
+export interface IWs {
+  wsConnected: boolean;
+  orders: Array<IOrder> | null;
+  total: number;
+  totalToday: number;
+  error?: Event;
+}

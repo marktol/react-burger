@@ -1,0 +1,20 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  display: flex;
+
+  justify-content: center;
+}
+.scrollDiv {
+  overflow-y: scroll;
+  height: 80vh;
+}
+.noDecoration {
+  text-decoration: none;
+  color: white;
+}
+.feed {
+  flex: 0 0 45%; /* Занимает 50% ширины родителя (левая половина) */
+}

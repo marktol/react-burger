@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import Login from "../../pages/login";
 import BurgerMain from "../../pages/BurgerMain";
 import Register from "../../pages/Register";
@@ -20,6 +26,12 @@ import { getIngredients } from "../../services/actions/thunkFunctions";
 import { checkUser } from "../../services/actions/userFunctions";
 import AppHeader from "../AppHeader/AppHeader";
 import styles from "./App.module.css";
+import { Feed } from "../Feed/Feed";
+import { Order } from "../Order/Order";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import { OrderFromHistory } from "../OrderFromHistory/OrderFromHistory";
+import path from "path";
+import { UserOrders } from "../UserOrders/UserOrders";
 
 export default function App() {
   const dispatch = useDispatch<any>();
@@ -90,6 +102,16 @@ export default function App() {
               path="/profile"
               element={<ProtectedRouteElement element={<Profile />} />}
             />
+            {!background && (
+              <Route path="/feed/:id" element={<Order user={false} />} />
+            )}
+            {!background && (
+              <Route path="/orders/:id" element={<Order user={true} />} />
+            )}
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:id" element={<Feed />} />
+            <Route path="/orders" element={<UserOrders />} />
+            <Route path="/orders/:id" element={<UserOrders />} />
 
             <Route path="*" element={<BurgerMain />} />
           </Routes>
@@ -103,6 +125,8 @@ export default function App() {
                   </Modal>
                 }
               />
+              <Route path="/feed/:id" element={<OrderFromHistory />} />
+              <Route path="/orders/:id" element={<OrderFromHistory />} />
             </Routes>
           )}
         </>

@@ -1,0 +1,25 @@
+.scrollDiv {
+  overflow-y: scroll;
+  height: 25vh;
+}
+.description {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.pictureContainer {
+  display: inline-block;
+  position: relative;
+}
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.statusColor {
+  color: aquamarine;
+}
+.pageContainer {
+  display: flex;
+  justify-content: center;
+}

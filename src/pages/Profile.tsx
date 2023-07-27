@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import styles from "./Profile.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getUser,
   refreshToken,
@@ -59,12 +59,24 @@ function Profile() {
   return (
     <div>
       <div className={styles.main}>
-        <div className={styles.tabs}>
+        <div className={`ml-25 mr-25 ${styles.tabs}`}>
           <Tab value="one" active={current === "one"} onClick={setCurrent}>
-            Profile
+            <Link
+              to={{
+                pathname: `/profile`,
+              }}
+            >
+              Profile
+            </Link>
           </Tab>
           <Tab value="two" active={current === "two"} onClick={setCurrent}>
-            Orders history
+            <Link
+              to={{
+                pathname: `/orders`,
+              }}
+            >
+              Orders history
+            </Link>
           </Tab>
           <Tab value="three" active={current === "three"} onClick={logOut}>
             Logout
