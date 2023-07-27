@@ -7,3 +7,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.notActiveTab {
+  text-decoration: none;
+  color: rgb(56, 76, 114);
+}
+
+.activeTab {
+  text-decoration: none;
+  color: white;
+}

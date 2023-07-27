@@ -18,3 +18,12 @@
 .feed {
   flex: 0 0 45%; /* Занимает 50% ширины родителя (левая половина) */
 }
+.notActiveTab {
+  text-decoration: none;
+  color: rgb(56, 76, 114);
+}
+
+.activeTab {
+  text-decoration: none;
+  color: white;
+}

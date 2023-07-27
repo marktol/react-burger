@@ -89,9 +89,10 @@ export const wsActions = {
 };
 
 export const socketMiddleware = (wsActions: any): Middleware => {
-  console.log(wsActions);
   return ((store) => {
     let socket: WebSocket | null = null;
+    const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
+      wsActions;
 
     return (next) => (action: PayloadAction<string>) => {
       const { dispatch } = store;
@@ -107,7 +108,11 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         };
 
         socket.onerror = (event) => {
-          dispatch(connectionError({ payload: event }));
+          dispatch(
+            connectionError({
+              message: "An error occurred in the WebSocket connection.",
+            })
+          );
         };
 
         socket.onmessage = (event) => {
@@ -119,12 +124,16 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         };
 
         socket.onclose = (event) => {
-          dispatch(connectionClosed({ payload: event }));
+          dispatch(connectionClosed());
         };
 
         if (type === WS_SEND_MESSAGE) {
           const message = action.payload;
           socket.send(JSON.stringify(message));
+        }
+        if (type === WS_CONNECTION_CLOSED && socket) {
+          socket.close();
+          socket = null;
         }
       }
 

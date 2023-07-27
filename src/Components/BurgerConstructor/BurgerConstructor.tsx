@@ -16,8 +16,6 @@ import {
 } from "../../services/reducers/BurgerConstructorReducer";
 import { addIngredient } from "../../services/reducers/allIngredientsReducer";
 import { v4 } from "uuid";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import OrderedIngredient from "../OrderedIngredient/OrderedIngredient";
 import { setOrder } from "../../services/actions/thunkFunctions";
 import { setOrderNumber } from "../../services/reducers/OrderDetailsReducer";
@@ -29,8 +27,6 @@ import { IStore } from "../../services/reducers/store";
 import { IIngredient } from "../../utils/interfaces";
 
 const BurgerConstructor = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
@@ -50,7 +46,7 @@ const BurgerConstructor = () => {
 
   const bunId = choosenBun ? [choosenBun._id] : [];
 
-  const itemsForOrder = ingrIds.concat(bunId);
+  const itemsForOrder = bunId.concat(ingrIds).concat(bunId);
 
   const moveIngredient = useCallback(
     (dragIndex: number, hoverIndex: number) => {
@@ -106,12 +102,8 @@ const BurgerConstructor = () => {
     const fetchData = async () => {
       try {
         dispatch(setOrder(itemsForOrder));
-        setIsLoading(false);
         setShowModal(true);
-      } catch (error) {
-        setHasError(true);
-        setIsLoading(false);
-      }
+      } catch (error) {}
     };
     if (getCookie("token")) {
       fetchData();

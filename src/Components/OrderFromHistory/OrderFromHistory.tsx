@@ -5,6 +5,8 @@ import { IIngredient, IOrder } from "../../utils/interfaces";
 import { Modal } from "../Modal/Modal";
 import styles from "./OrderFromHistory.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect } from "react";
+import { WS_CONNECTION_START } from "../../services/actions/socketMiddleware";
 
 export const OrderFromHistory = () => {
   const ingredientsFromStore = useSelector(
@@ -117,7 +119,7 @@ export const OrderHistoryComponent = ({
           <div className={`custom-scroll mt-6  ${styles.scrollDiv}`}>
             {ingridientsInOrder.map(
               (elem: { ingr: IIngredient; count: number }) => (
-                <div className={styles.description}>
+                <div key={elem.ingr._id} className={styles.description}>
                   <div>
                     <img src={elem.ingr.image_mobile} alt={elem.ingr.name} />
                   </div>
@@ -177,7 +179,7 @@ export const OrderHistoryComponent = ({
             <div className={`custom-scroll mt-6  ${styles.scrollDiv}`}>
               {ingridientsInOrder.map(
                 (elem: { ingr: IIngredient; count: number }) => (
-                  <div className={styles.description}>
+                  <div key={elem.ingr._id} className={styles.description}>
                     <div>
                       <img src={elem.ingr.image_mobile} alt={elem.ingr.name} />
                     </div>

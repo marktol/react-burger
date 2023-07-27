@@ -36,7 +36,7 @@ export const setOrder = createAsyncThunk<string, Array<string>>(
     }).then(checkReponse);
 
     const data = response.order.number;
-    console.log(data);
+
     return data;
   }
 );

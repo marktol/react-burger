@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCookie } from "../../utils/utils";
 import { logout } from "../../services/actions/userFunctions";
 import { useDispatch, useSelector } from "react-redux";
-import { WS_CONNECTION_START } from "../../services/actions/socketMiddleware";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../services/actions/socketMiddleware";
 import { useEffect } from "react";
 import { IStore } from "../../services/reducers/store";
 import { FeedCard } from "../Feed/Feed";
@@ -15,7 +18,13 @@ export const UserOrders = () => {
   const dispatch = useDispatch<any>();
 
   const wsConnected = useSelector((state: IStore) => state.ws.wsConnected);
-  console.log(wsConnected);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
+
   useEffect(() => {
     if (!wsConnected) {
       dispatch({
@@ -39,30 +48,38 @@ export const UserOrders = () => {
   return (
     <>
       <div>
-        <div className={styles.main}>
+        <div className={`mt-15 ${styles.main}`}>
           <div className={styles.leftDiv}>
-            <div className="ml-25 mr-25">
-              <Tab value="one" active={false} onClick={() => {}}>
-                <Link
-                  to={{
-                    pathname: `/profile`,
-                  }}
+            <div className="ml-25">
+              <div className={`mr-15 `}>
+                <div className={`text text_type_main-large mt-7`}>
+                  <Link
+                    to={{
+                      pathname: `/profile`,
+                    }}
+                    className={styles.notActiveTab}
+                  >
+                    Profile
+                  </Link>
+                </div>
+                <div className="text text_type_main-large mt-5">
+                  <Link
+                    to={{
+                      pathname: `/orders`,
+                    }}
+                    className={styles.activeTab}
+                  >
+                    Orders history
+                  </Link>
+                </div>
+
+                <div
+                  className={`${styles.notActiveTab} text text_type_main-large mt-5`}
+                  onClick={logOut}
                 >
-                  Profile
-                </Link>
-              </Tab>
-              <Tab value="two" active={true} onClick={() => {}}>
-                <Link
-                  to={{
-                    pathname: `/orders`,
-                  }}
-                >
-                  Orders history
-                </Link>
-              </Tab>
-              <Tab value="three" active={false} onClick={logOut}>
-                Logout
-              </Tab>
+                  Logout
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -72,9 +89,10 @@ export const UserOrders = () => {
               <Link
                 className={styles.noDecoration}
                 to={{
-                  pathname: `/orders/${elem.number}`,
+                  pathname: `/profile/orders/${elem.number}`,
                 }}
                 state={{ background: "modal" }}
+                key={elem.number}
               >
                 <FeedCard elem={elem} />
               </Link>

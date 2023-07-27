@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { WS_CONNECTION_START } from "../../services/actions/socketMiddleware";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../services/actions/socketMiddleware";
 import styles from "./feed.module.css";
 import { IStore } from "../../services/reducers/store";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,11 +16,17 @@ export const Feed = () => {
   const wsConnected = useSelector((state: IStore) => state.ws.wsConnected);
 
   useEffect(() => {
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
+
+  useEffect(() => {
     if (!wsConnected) {
       dispatch({ type: WS_CONNECTION_START, payload: url });
     }
-    return () => {};
-  });
+    //dispatch({ type: WS_CONNECTION_CLOSED });
+  }, []);
 
   const orders = useSelector((state: IStore) => state.ws.orders);
 
@@ -42,6 +51,7 @@ export const Feed = () => {
                     pathname: `/feed/${elem.number}`,
                   }}
                   state={{ background: "modal" }}
+                  key={elem.number}
                 >
                   <FeedCard elem={elem} />
                 </Link>
@@ -86,6 +96,7 @@ const FeedssInfo = ({
           <div>
             {updReady.map((elem: number) => (
               <p
+                key={elem}
                 className={`text text_type_digits-default mt-2 ${styles.done}`}
               >
                 {elem}
@@ -97,7 +108,9 @@ const FeedssInfo = ({
           <p className="text text_type_main-medium mb-6">Inprogress:</p>
           <div>
             {ordersInProgress.map((elem: number) => (
-              <p className="text text_type_digits-default mt-2">{elem}</p>
+              <p key={elem} className="text text_type_digits-default mt-2">
+                {elem}
+              </p>
             ))}
           </div>
         </div>

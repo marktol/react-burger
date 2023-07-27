@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "../../pages/login";
 import BurgerMain from "../../pages/BurgerMain";
 import Register from "../../pages/Register";
@@ -28,9 +22,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import styles from "./App.module.css";
 import { Feed } from "../Feed/Feed";
 import { Order } from "../Order/Order";
-import OrderDetails from "../OrderDetails/OrderDetails";
 import { OrderFromHistory } from "../OrderFromHistory/OrderFromHistory";
-import path from "path";
 import { UserOrders } from "../UserOrders/UserOrders";
 
 export default function App() {
@@ -69,6 +61,17 @@ export default function App() {
             {!background && (
               <Route path="/ingredients/:id" element={<Ingredient />} />
             )}
+            {!background && (
+              <Route path="/feed/:id" element={<Order user={false} />} />
+            )}
+            {!background && (
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <ProtectedRouteElement element={<Order user={true} />} />
+                }
+              />
+            )}
 
             <Route
               path="/login"
@@ -98,21 +101,17 @@ export default function App() {
               }
             />
 
+            <Route path="/profile/orders" element={<UserOrders />} />
+            <Route
+              path="/profile/orders/:id"
+              element={<ProtectedRouteElement element={<OrderFromHistory />} />}
+            />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:id" element={<Feed />} />
             <Route
               path="/profile"
               element={<ProtectedRouteElement element={<Profile />} />}
             />
-            {!background && (
-              <Route path="/feed/:id" element={<Order user={false} />} />
-            )}
-            {!background && (
-              <Route path="/orders/:id" element={<Order user={true} />} />
-            )}
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/feed/:id" element={<Feed />} />
-            <Route path="/orders" element={<UserOrders />} />
-            <Route path="/orders/:id" element={<UserOrders />} />
-
             <Route path="*" element={<BurgerMain />} />
           </Routes>
           {background && !loading && (
@@ -126,7 +125,12 @@ export default function App() {
                 }
               />
               <Route path="/feed/:id" element={<OrderFromHistory />} />
-              <Route path="/orders/:id" element={<OrderFromHistory />} />
+              <Route
+                path="/profile/orders/:id"
+                element={
+                  <ProtectedRouteElement element={<OrderFromHistory />} />
+                }
+              />
             </Routes>
           )}
         </>

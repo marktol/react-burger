@@ -28,7 +28,7 @@ export const ws = createSlice({
       };
     },
 
-    connectionClosed: (state, action) => {
+    connectionClosed: (state) => {
       return {
         ...state,
         error: undefined,

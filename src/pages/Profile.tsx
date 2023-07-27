@@ -58,29 +58,41 @@ function Profile() {
 
   return (
     <div>
-      <div className={styles.main}>
-        <div className={`ml-25 mr-25 ${styles.tabs}`}>
-          <Tab value="one" active={current === "one"} onClick={setCurrent}>
+      <div className={`${styles.main} mt-15`}>
+        <div className={`mr-15 `}>
+          <div className={`text text_type_main-large mt-7`}>
             <Link
               to={{
                 pathname: `/profile`,
               }}
+              className={styles.activeTab}
             >
               Profile
             </Link>
-          </Tab>
-          <Tab value="two" active={current === "two"} onClick={setCurrent}>
+          </div>
+          <div className="text text_type_main-large mt-5">
             <Link
               to={{
-                pathname: `/orders`,
+                pathname: `/profile/orders`,
               }}
+              className={styles.notActiveTab}
             >
               Orders history
             </Link>
-          </Tab>
-          <Tab value="three" active={current === "three"} onClick={logOut}>
+          </div>
+
+          <div
+            className={`${styles.notActiveTab} text text_type_main-large mt-5`}
+            onClick={logOut}
+          >
             Logout
-          </Tab>
+          </div>
+
+          <div
+            className={`${styles.notActiveTab} mt-20 text text_type_main-default`}
+          >
+            Her u cat change ur data
+          </div>
         </div>
         <div>
           <Input
@@ -97,6 +109,7 @@ function Profile() {
             name={"email"}
             isIcon={false}
             onChange={onChangeEmail}
+            extraClass="mt-6"
           />
 
           <PasswordInput
@@ -104,7 +117,7 @@ function Profile() {
             placeholder={"Password"}
             value={password}
             name={"password"}
-            extraClass="mb-2"
+            extraClass="mb-2 mt-6"
           />
         </div>
       </div>
