@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import styles from "./BurgerIngredients.module.css";
 import { Modal } from "../Modal/Modal";
@@ -213,7 +213,6 @@ const BurgerElement = (props: IBurgerElementProps) => {
     type: props.dragType,
     item: { element: props.data },
   });
-  const location = useLocation();
 
   return (
     <div className="mr-4" ref={drag}>

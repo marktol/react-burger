@@ -33,6 +33,7 @@ export const ws = createSlice({
         ...state,
         error: undefined,
         wsConnected: false,
+        orders: [],
       };
     },
 

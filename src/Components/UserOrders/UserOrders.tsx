@@ -2,7 +2,11 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./UserOrders.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { getCookie } from "../../utils/utils";
-import { logout } from "../../services/actions/userFunctions";
+import {
+  getUser,
+  logout,
+  refreshToken,
+} from "../../services/actions/userFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   WS_CONNECTION_CLOSED,
@@ -27,6 +31,16 @@ export const UserOrders = () => {
 
   useEffect(() => {
     if (!wsConnected) {
+      const fetchData = async () => {
+        dispatch(getUser(getCookie("token"))).then((data: any) => {
+          if (data.error && data.error.message === "jwt expired") {
+            dispatch(refreshToken(getCookie("refreshToken"))).then(() => {
+              fetchData();
+            });
+          }
+        });
+      };
+      fetchData();
       dispatch({
         type: WS_CONNECTION_START,
         payload: `${url}?token=${getCookie("token")}`,
@@ -65,7 +79,7 @@ export const UserOrders = () => {
                 <div className="text text_type_main-large mt-5">
                   <Link
                     to={{
-                      pathname: `/orders`,
+                      pathname: `/profile/orders`,
                     }}
                     className={styles.activeTab}
                   >

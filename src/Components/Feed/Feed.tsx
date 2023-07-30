@@ -26,7 +26,7 @@ export const Feed = () => {
       dispatch({ type: WS_CONNECTION_START, payload: url });
     }
     //dispatch({ type: WS_CONNECTION_CLOSED });
-  }, []);
+  }, [wsConnected]);
 
   const orders = useSelector((state: IStore) => state.ws.orders);
 

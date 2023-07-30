@@ -17,13 +17,18 @@ import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useEffect, useState } from "react";
 import { getIngredients } from "../../services/actions/thunkFunctions";
-import { checkUser } from "../../services/actions/userFunctions";
+import {
+  checkUser,
+  getUser,
+  refreshToken,
+} from "../../services/actions/userFunctions";
 import AppHeader from "../AppHeader/AppHeader";
 import styles from "./App.module.css";
 import { Feed } from "../Feed/Feed";
 import { Order } from "../Order/Order";
 import { OrderFromHistory } from "../OrderFromHistory/OrderFromHistory";
 import { UserOrders } from "../UserOrders/UserOrders";
+import { getCookie } from "../../utils/utils";
 
 export default function App() {
   const dispatch = useDispatch<any>();
@@ -33,11 +38,19 @@ export default function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(checkUser()).then(() => {
-        dispatch(getIngredients()).then(() => {
-          setLoading(false);
+      dispatch(getUser(getCookie("token")))
+        .then((data: any) => {
+          if (data.error && data.error.message === "jwt expired") {
+            dispatch(refreshToken(getCookie("refreshToken"))).then(() => {
+              fetchData();
+            });
+          }
+        })
+        .then(() => {
+          dispatch(getIngredients()).then(() => {
+            setLoading(false);
+          });
         });
-      });
     };
 
     fetchData();
@@ -104,7 +117,7 @@ export default function App() {
             <Route path="/profile/orders" element={<UserOrders />} />
             <Route
               path="/profile/orders/:id"
-              element={<ProtectedRouteElement element={<OrderFromHistory />} />}
+              element={<ProtectedRouteElement element={<UserOrders />} />}
             />
             <Route path="/feed" element={<Feed />} />
             <Route path="/feed/:id" element={<Feed />} />

@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../utils/utils";
 
 import {
-  Tab,
   PasswordInput,
   EmailInput,
   Input,
@@ -27,16 +26,14 @@ function Profile() {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {};
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [password] = useState("");
 
-  const [current, setCurrent] = useState("one");
   const dispatch = useDispatch<any>();
 
   const logOut = async () => {
     const refreshToken: string = getCookie("refreshToken");
     dispatch(logout(refreshToken)).then((data: any) => {
-      if (data.payload && data.payload.success == true) {
+      if (data.payload && data.payload.success === true) {
         navigate("/login");
       }
     });

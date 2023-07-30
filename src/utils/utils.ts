@@ -4,7 +4,9 @@ import { store } from "../services/reducers/store";
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, never, any>;
 type DispatchFunc = () => AppDispatch;
+
 export const useAppDispatch: DispatchFunc = useDispatch;
+
 export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(

@@ -2,9 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { IStore } from "../../services/reducers/store";
 import { IIngredient, IOrder } from "../../utils/interfaces";
-import { Modal } from "../Modal/Modal";
-import styles from "./OrderFromHistory.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderHistoryComponent } from "../OrderFromHistory/OrderFromHistory";
 import { useEffect } from "react";
 import {
@@ -12,11 +9,12 @@ import {
   WS_CONNECTION_START,
 } from "../../services/actions/socketMiddleware";
 import { getCookie } from "../../utils/utils";
+import { getUser, refreshToken } from "../../services/actions/userFunctions";
 const url = "wss://norma.nomoreparties.space/orders/all";
 const urlUser = "wss://norma.nomoreparties.space/orders";
 
 export const Order = ({ user }: { user: boolean }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const wsConnected = useSelector((state: IStore) => state.ws.wsConnected);
 
   useEffect(() => {
@@ -30,6 +28,16 @@ export const Order = ({ user }: { user: boolean }) => {
       dispatch({ type: WS_CONNECTION_START, payload: url });
     }
     if (!wsConnected && user) {
+      const fetchData = async () => {
+        dispatch(getUser(getCookie("token"))).then((data: any) => {
+          if (data.error && data.error.message === "jwt expired") {
+            dispatch(refreshToken(getCookie("refreshToken"))).then(() => {
+              fetchData();
+            });
+          }
+        });
+      };
+      fetchData();
       dispatch({
         type: WS_CONNECTION_START,
         payload: `${urlUser}?token=${getCookie("token")}`,
@@ -44,7 +52,7 @@ export const Order = ({ user }: { user: boolean }) => {
   const { id } = useParams();
   const orderId = parseInt(id || "", 10);
   const orderFromStore = useSelector((state: IStore) =>
-    state.ws.orders?.filter((elem) => elem?.number == orderId)
+    state.ws.orders?.filter((elem) => elem?.number === orderId)
   );
   const order: IOrder | undefined = orderFromStore?.[0];
 
