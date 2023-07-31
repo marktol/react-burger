@@ -4,10 +4,20 @@
 }
 .main {
   display: flex;
-  align-items: center;
+
   justify-content: center;
 }
-
+.scrollDiv {
+  overflow-y: scroll;
+  height: 80vh;
+}
+.noDecoration {
+  text-decoration: none;
+  color: white;
+}
+.feed {
+  flex: 0 0 45%; /* Занимает 50% ширины родителя (левая половина) */
+}
 .notActiveTab {
   text-decoration: none;
   color: rgb(56, 76, 114);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import styles from "./Profile.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getUser,
   refreshToken,
@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../utils/utils";
 
 import {
-  Tab,
   PasswordInput,
   EmailInput,
   Input,
@@ -27,16 +26,14 @@ function Profile() {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {};
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [password] = useState("");
 
-  const [current, setCurrent] = useState("one");
   const dispatch = useDispatch<any>();
 
   const logOut = async () => {
     const refreshToken: string = getCookie("refreshToken");
     dispatch(logout(refreshToken)).then((data: any) => {
-      if (data.payload && data.payload.success == true) {
+      if (data.payload && data.payload.success === true) {
         navigate("/login");
       }
     });
@@ -58,17 +55,41 @@ function Profile() {
 
   return (
     <div>
-      <div className={styles.main}>
-        <div className={styles.tabs}>
-          <Tab value="one" active={current === "one"} onClick={setCurrent}>
-            Profile
-          </Tab>
-          <Tab value="two" active={current === "two"} onClick={setCurrent}>
-            Orders history
-          </Tab>
-          <Tab value="three" active={current === "three"} onClick={logOut}>
+      <div className={`${styles.main} mt-15`}>
+        <div className={`mr-15 `}>
+          <div className={`text text_type_main-large mt-7`}>
+            <Link
+              to={{
+                pathname: `/profile`,
+              }}
+              className={styles.activeTab}
+            >
+              Profile
+            </Link>
+          </div>
+          <div className="text text_type_main-large mt-5">
+            <Link
+              to={{
+                pathname: `/profile/orders`,
+              }}
+              className={styles.notActiveTab}
+            >
+              Orders history
+            </Link>
+          </div>
+
+          <div
+            className={`${styles.notActiveTab} text text_type_main-large mt-5`}
+            onClick={logOut}
+          >
             Logout
-          </Tab>
+          </div>
+
+          <div
+            className={`${styles.notActiveTab} mt-20 text text_type_main-default`}
+          >
+            Her u cat change ur data
+          </div>
         </div>
         <div>
           <Input
@@ -85,6 +106,7 @@ function Profile() {
             name={"email"}
             isIcon={false}
             onChange={onChangeEmail}
+            extraClass="mt-6"
           />
 
           <PasswordInput
@@ -92,7 +114,7 @@ function Profile() {
             placeholder={"Password"}
             value={password}
             name={"password"}
-            extraClass="mb-2"
+            extraClass="mb-2 mt-6"
           />
         </div>
       </div>

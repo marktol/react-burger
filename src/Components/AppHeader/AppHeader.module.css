@@ -28,3 +28,12 @@
   color: inherit;
   text-decoration: none;
 }
+.notActiveTab {
+  text-decoration: none;
+  color: rgb(132, 139, 153);
+}
+
+.activeTab {
+  text-decoration: none;
+  color: white;
+}

@@ -1,13 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getCookie } from "../../utils/utils";
 import { IStore } from "../../services/reducers/store";
-import {
-  checkUser,
-  getUser,
-  refreshToken,
-} from "../../services/actions/userFunctions";
-import { useEffect } from "react";
 
 export const ProtectedRouteElement = ({ element }: { element: any }) => {
   const location = useLocation();

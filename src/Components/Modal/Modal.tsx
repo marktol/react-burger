@@ -25,7 +25,9 @@ export const Modal = (props: IModalProps) => {
   };
 
   const escFunction = (e: KeyboardEvent) => {
-    if (e.key === "Escape") closeMyPopup();
+    if (e.key === "Escape") {
+      closeMyPopup();
+    }
   };
 
   const clickHandler = () => {
