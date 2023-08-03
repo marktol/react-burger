@@ -43,7 +43,7 @@ const initialState: IAllIngredients = {
   hasError: false,
 };
 
-test("should return the initial state", () => {
+test("should return the initial state allIngredientsReducer", () => {
   expect(reducer(undefined, { type: undefined })).toEqual({
     ingredients: [],
     isLoading: true,
@@ -209,7 +209,6 @@ test("should change ingredients after getIngredients.fulfilled", () => {
   ];
 
   const action = getIngredients.fulfilled(ingrsToAdd, "", undefined, undefined);
-
   const newState = reducer(initialState, action);
 
   expect(newState.ingredients).toEqual(ingrsToAdd);

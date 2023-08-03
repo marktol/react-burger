@@ -34,6 +34,8 @@ export const ws = createSlice({
         error: undefined,
         wsConnected: false,
         orders: [],
+        total: 0,
+        totalToday: 0,
       };
     },
 
