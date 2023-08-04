@@ -124,19 +124,21 @@ const BurgerIngredients = () => {
             {ingredients
               .filter((elem) => elem.type === "bun")
               .map((bun) => (
-                <BurgerElement
-                  key={bun._id}
-                  img={bun.image}
-                  cost={bun.price}
-                  name={bun.name}
-                  data={bun}
-                  count={bun.count}
-                  onClick={() => {
-                    onOpenModal(bun);
-                  }}
-                  dragType="bun"
-                  itemId={bun._id}
-                />
+                <div data-cy={"bun"}>
+                  <BurgerElement
+                    key={bun._id}
+                    img={bun.image}
+                    cost={bun.price}
+                    name={bun.name}
+                    data={bun}
+                    count={bun.count}
+                    onClick={() => {
+                      onOpenModal(bun);
+                    }}
+                    dragType="bun"
+                    itemId={bun._id}
+                  />
+                </div>
               ))}
           </div>
           <p
@@ -149,19 +151,21 @@ const BurgerIngredients = () => {
             {ingredients
               .filter((elem) => elem.type === "sauce")
               .map((ingr) => (
-                <BurgerElement
-                  key={ingr._id}
-                  img={ingr.image}
-                  cost={ingr.price}
-                  name={ingr.name}
-                  data={ingr}
-                  count={ingr.count}
-                  onClick={() => {
-                    onOpenModal(ingr);
-                  }}
-                  dragType="ingr"
-                  itemId={ingr._id}
-                />
+                <div data-cy={"ingr"}>
+                  <BurgerElement
+                    key={ingr._id}
+                    img={ingr.image}
+                    cost={ingr.price}
+                    name={ingr.name}
+                    data={ingr}
+                    count={ingr.count}
+                    onClick={() => {
+                      onOpenModal(ingr);
+                    }}
+                    dragType="ingr"
+                    itemId={ingr._id}
+                  />
+                </div>
               ))}
           </div>
           <p
@@ -174,19 +178,22 @@ const BurgerIngredients = () => {
             {ingredients
               .filter((elem) => elem.type === "main")
               .map((ingr) => (
-                <BurgerElement
-                  key={ingr._id}
-                  img={ingr.image}
-                  cost={ingr.price}
-                  name={ingr.name}
-                  data={ingr}
-                  count={ingr.count}
-                  onClick={() => {
-                    onOpenModal(ingr);
-                  }}
-                  dragType="ingr"
-                  itemId={ingr._id}
-                />
+                <div data-cy={"ingr"}>
+                  <BurgerElement
+                    data-cy={"ingr"}
+                    key={ingr._id}
+                    img={ingr.image}
+                    cost={ingr.price}
+                    name={ingr.name}
+                    data={ingr}
+                    count={ingr.count}
+                    onClick={() => {
+                      onOpenModal(ingr);
+                    }}
+                    dragType="ingr"
+                    itemId={ingr._id}
+                  />
+                </div>
               ))}
           </div>
         </div>

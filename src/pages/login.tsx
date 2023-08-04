@@ -52,6 +52,7 @@ function Login() {
             name={"email"}
             isIcon={false}
             extraClass="mb-6"
+            data-cy={"email"}
           />
 
           <PasswordInput
@@ -60,6 +61,7 @@ function Login() {
             value={password}
             name={"password"}
             extraClass="mb-6"
+            data-cy={"pass"}
           />
           <Button htmlType="submit" type="primary" size="medium">
             Login

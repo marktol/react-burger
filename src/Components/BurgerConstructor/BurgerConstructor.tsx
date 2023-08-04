@@ -145,6 +145,7 @@ const BurgerConstructor = () => {
 
           <div
             ref={drop}
+            data-cy={"dropArea"}
             className={`${styles.scrollCm} ${styles.ingrs} custom-scroll `}
           >
             {ingrsInConstructor.length > 0 ? (
