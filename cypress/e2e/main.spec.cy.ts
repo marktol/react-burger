@@ -24,6 +24,15 @@ describe("constructor + order + model", () => {
     cy.get("[data-cy=closeButton]").click();
     cy.get("[data-cy=overlay]").should("not.exist");
   });
+
+  it("should open and close modal window", () => {
+    cy.contains("Constructor");
+
+    cy.get("[data-cy=bun]").first().click();
+    cy.get("[data-cy=overlay]").should("exist");
+    cy.get("[data-cy=closeButton]").click();
+    cy.get("[data-cy=overlay]").should("not.exist");
+  });
 });
 
 export {};
