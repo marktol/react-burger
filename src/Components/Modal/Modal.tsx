@@ -42,7 +42,7 @@ export const Modal = (props: IModalProps) => {
   }, []);
 
   return createPortal(
-    <div>
+    <div data-cy={"overlay"}>
       <div onClick={clickHandler}>
         <ModalOverlay isShowing={true} />
       </div>
@@ -51,7 +51,9 @@ export const Modal = (props: IModalProps) => {
         <div className={styles.modalContent}>
           <div className={`${styles.modalHeader} pr-10 pl-10 pt-10`}>
             <span className="text text_type_main-large">{props.title}</span>
-            <CloseIcon onClick={clickHandler} type="primary" />
+            <div data-cy={"closeButton"} onClick={clickHandler}>
+              <CloseIcon type="primary" />
+            </div>
           </div>
           {props.children}
         </div>

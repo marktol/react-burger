@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IBurgerIngredient, IIngredient } from "../../utils/interfaces";
 
 export interface IBurgerConstructor {
@@ -13,7 +13,7 @@ const initialState: IBurgerConstructor = {
   totalPrice: 0,
 };
 
-const recalcTotal = (state: IBurgerConstructor) => {
+export const recalcTotal = (state: IBurgerConstructor) => {
   const bunPrice = state.bun ? state.bun.price * 2 : 0;
 
   state.totalPrice =
@@ -45,7 +45,7 @@ export const burgerConstructor = createSlice({
       recalcTotal(state);
     },
     addBunToBurgerConstructor: (state, action) => {
-      const { item } = action.payload; // Добавляем эти строки для определения переменных item и id
+      const { item } = action.payload;
       state.bun = item;
       recalcTotal(state);
     },
