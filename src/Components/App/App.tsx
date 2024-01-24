@@ -7,7 +7,7 @@ import ResetPassword from "../../pages/Reset-password";
 import ForgotPassword from "../../pages/Forgot-password";
 import Profile from "../../pages/Profile";
 import { useDispatch } from "react-redux";
-import { Audio } from "react-loader-spinner";
+import { BallTriangle } from "react-loader-spinner";
 import {
   ProtectedRouteElement,
   ProtectedRouteElementLogginedUser,
@@ -17,11 +17,7 @@ import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { useEffect, useState } from "react";
 import { getIngredients } from "../../services/actions/thunkFunctions";
-import {
-  checkUser,
-  getUser,
-  refreshToken,
-} from "../../services/actions/userFunctions";
+import { getUser, refreshToken } from "../../services/actions/userFunctions";
 import AppHeader from "../AppHeader/AppHeader";
 import styles from "./App.module.css";
 import { Feed } from "../Feed/Feed";
@@ -55,10 +51,11 @@ export default function App() {
 
     fetchData();
   }, [dispatch]);
+
   return (
     <>
       {loading && (
-        <Audio
+        <BallTriangle
           wrapperClass={styles.loader}
           height="180"
           width="180"
@@ -113,7 +110,6 @@ export default function App() {
                 />
               }
             />
-
             <Route path="/profile/orders" element={<UserOrders />} />
             <Route
               path="/profile/orders/:id"

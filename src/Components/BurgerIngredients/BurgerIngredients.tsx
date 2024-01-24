@@ -73,6 +73,13 @@ const BurgerIngredients = () => {
     setShowModal(true);
   };
 
+  const scrollToSection = (sectionId: any) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       {showModal && (
@@ -89,21 +96,30 @@ const BurgerIngredients = () => {
             <Tab
               value="Buns"
               active={activeTab === "Buns"}
-              onClick={() => setActiveTab("Buns")}
+              onClick={() => {
+                scrollToSection("Buns");
+                setActiveTab("Buns");
+              }}
             >
               Булки
             </Tab>
             <Tab
               value="Sauces"
               active={activeTab === "Sauces"}
-              onClick={() => setActiveTab("Sauces")}
+              onClick={() => {
+                setActiveTab("Sauces");
+                scrollToSection("Sauces");
+              }}
             >
               Соусы
             </Tab>
             <Tab
               value="Toppings"
               active={activeTab === "Toppings"}
-              onClick={() => setActiveTab("Toppings")}
+              onClick={() => {
+                scrollToSection("Toppings");
+                setActiveTab("Toppings");
+              }}
             >
               Начинки
             </Tab>

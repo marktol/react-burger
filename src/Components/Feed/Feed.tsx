@@ -9,6 +9,8 @@ import { IStore } from "../../services/reducers/store";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IOrder } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
+import { FaBeer } from "react-icons/fa";
+
 const url = "wss://norma.nomoreparties.space/orders/all";
 
 export const Feed = () => {
@@ -25,7 +27,6 @@ export const Feed = () => {
     if (!wsConnected) {
       dispatch({ type: WS_CONNECTION_START, payload: url });
     }
-    //dispatch({ type: WS_CONNECTION_CLOSED });
   }, [wsConnected]);
 
   const orders = useSelector((state: IStore) => state.ws.orders);

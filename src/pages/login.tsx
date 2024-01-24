@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styles from "./Login.module.css";
 import { useDispatch } from "react-redux";
