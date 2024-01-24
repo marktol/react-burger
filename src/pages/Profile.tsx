@@ -84,12 +84,6 @@ function Profile() {
           >
             Logout
           </div>
-
-          <div
-            className={`${styles.notActiveTab} mt-20 text text_type_main-default`}
-          >
-            Her u cat change ur data
-          </div>
         </div>
         <div>
           <Input
